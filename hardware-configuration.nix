@@ -87,6 +87,7 @@
       nvidiaSettings = true;
     };
   };
+  hardware.nvidia-container-toolkit.enable = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/ROOT";
@@ -116,5 +117,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.enableAllFirmware = true;
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

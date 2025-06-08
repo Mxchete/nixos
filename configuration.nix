@@ -26,6 +26,7 @@
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.wifi.backend = "iwd";
 
   # Enable flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -139,6 +140,41 @@
     dates = "daily";
   };
 
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  virtualisation.containers.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+      # enableNvidia = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+  virtualisation.waydroid.enable = true;
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    gamescopeSession.enable = true;
+    extraCompatPackages = with pkgs; [
+      steamtinkerlaunch
+    ];
+  };
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
@@ -146,19 +182,32 @@
     # inputs.nix-software-center.packages.${system}.nix-software-center
     # Packages
     adw-gtk3
+    ani-cli
+    better-control
+    celluloid
+    dconf
     discord
+    distrobox
     fastfetch
     firefox
     flatpak
     gcc
     ghostty
     git
+    gnome-boxes
     gnome-software
     gnome-tweaks
     heroic
+    kando
+    kdePackages.ocean-sound-theme
+    libreoffice
+    limo
+    # minecraft # Currently Broken ???
     morewaita-icon-theme
     neovim
     nexusmods-app-unfree
+    openrct2
+    oreo-cursors-plus
     pavucontrol
     pay-respects
     pciutils
@@ -167,7 +216,8 @@
     r2modman
     resources
     sbctl
-    steam
+    # steam
+    # steamtinkerlaunch
     stow
     usbutils
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
