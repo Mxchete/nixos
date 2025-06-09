@@ -6,10 +6,12 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Desktop Environment Selection
       ./gnome.nix
+      ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
     ];
@@ -25,11 +27,11 @@
   networking.hostName = "tengoku"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   networking.networkmanager.wifi.backend = "iwd";
 
   # Enable flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -50,16 +52,18 @@
   # services.xserver.enable = true;
 
 
-  environment.sessionVariables.ALSA_CONFIG_UCM2 = let
-    # Updated version with https://github.com/alsa-project/alsa-ucm-conf/issues/123 bugfix.
-    alsa-ucm-conf = pkgs.fetchFromGitHub {
-      owner  = "alsa-project";
-      repo   = "alsa-ucm-conf";
-      rev    = "v1.2.14";
-      sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";  # Replace this
-    };
-  in "${alsa-ucm-conf}/ucm2";
-  
+  environment.sessionVariables.ALSA_CONFIG_UCM2 =
+    let
+      # Updated version with https://github.com/alsa-project/alsa-ucm-conf/issues/123 bugfix.
+      alsa-ucm-conf = pkgs.fetchFromGitHub {
+        owner = "alsa-project";
+        repo = "alsa-ucm-conf";
+        rev = "v1.2.14";
+        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA="; # Replace this
+      };
+    in
+    "${alsa-ucm-conf}/ucm2";
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -111,10 +115,10 @@
     # };
   };
   users.defaultUserShell = pkgs.zsh;
-  
+
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "audio"];
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -123,10 +127,10 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.gc = {
-		automatic = true;
-		dates = "weekly";
-		options = "--delete-older-than 30d";
-	};
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   system.autoUpgrade = {
     enable = true;
@@ -134,7 +138,7 @@
     flags = [
       "--update-input"
       "nixpkgs"
-      "--no-write-lock-file"
+      # "--no-write-lock-file"
       "-L" # print build logs
     ];
     dates = "daily";
@@ -184,6 +188,7 @@
     adw-gtk3
     ani-cli
     better-control
+    cargo
     celluloid
     dconf
     discord
@@ -191,12 +196,14 @@
     fastfetch
     firefox
     flatpak
+    fzf
     gcc
     ghostty
     git
     gnome-boxes
     gnome-software
     gnome-tweaks
+    google-chrome
     heroic
     kando
     kdePackages.ocean-sound-theme
@@ -206,6 +213,7 @@
     morewaita-icon-theme
     neovim
     nexusmods-app-unfree
+    openloco
     openrct2
     oreo-cursors-plus
     pavucontrol
@@ -221,6 +229,8 @@
     stow
     usbutils
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vscode
+    vscode.fhs
     wget
     wirelesstools
     wl-clipboard
