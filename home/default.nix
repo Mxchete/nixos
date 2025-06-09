@@ -4,6 +4,6 @@
   imports = [
     ./home-configuration.nix
     ./modules/shell
-    # ./modules/wm/hyprland.nix
+    ./modules/wm/hyprland
   ];
 }
