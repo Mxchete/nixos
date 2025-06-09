@@ -11,7 +11,7 @@
       ./hardware-configuration.nix
       # Desktop Environment Selection
       ./gnome.nix
-      # ./hyprland.nix
+      ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
     ];

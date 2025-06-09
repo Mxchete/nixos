@@ -12,8 +12,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "git+https://github.com/Aylur/ags?rev=60180a184cfb32b61a1d871c058b31a3b9b0743d";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+    };
   };
-  outputs = {self, nixpkgs, chaotic, lanzaboote, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, ... }@inputs: {
     nixosConfigurations = {
       tengoku = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

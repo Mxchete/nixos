@@ -1,14 +1,14 @@
 { inputs, config, lib, settings, pkgs, ... }:
 {
   imports = [
-    ./hyprland/ags.nix
-    ./hyprland/env.nix
-    ./hyprland/binds.nix
-    ./hyprland/scripts.nix
-    ./hyprland/rules.nix
-    ./hyprland/settings.nix
-    ./hyprland/plugins.nix
-    ./hyprland/hyprlock.nix
+    # ./hyprland/ags.nix
+    # ./hyprland/env.nix
+    # ./hyprland/binds.nix
+    # ./hyprland/scripts.nix
+    # ./hyprland/rules.nix
+    # ./hyprland/settings.nix
+    # ./hyprland/plugins.nix
+    # ./hyprland/hyprlock.nix
   ];
 
   home.packages = with pkgs; [
@@ -18,7 +18,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    systemd.enable = true;
+    # systemd.enable = true;
     plugins = [
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
     ] ++ lib.optional (settings.themeDetails.bordersPlusPlus)
