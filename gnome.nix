@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 {
-  services.displayManager.gdm.enable = true;
+  # services.displayManager.gdm.enable = true;
+  # services.displayManager.gdm.wayland = true;
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.wayland = true;
   services.udev.packages = [ pkgs.gnome-settings-daemon ];
   services.sysprof.enable = true;
   services.dbus.packages = with pkgs; [ gnome2.GConf ];
@@ -17,26 +17,27 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
   environment.systemPackages = with pkgs.gnomeExtensions; [
-      blur-my-shell
-      appindicator
-      arcmenu
-      bluetooth-battery-meter
-      burn-my-windows
-      caffeine
-      clipboard-indicator
-      dynamic-calendar-and-clocks-icons
-      foresight
-      fullscreen-to-empty-workspace
-      fuzzy-app-search
-      gsconnect
-      just-perfection
-      kando-integration
-      media-progress
-      osd-volume-number
-      quick-settings-tweaker
-      rounded-window-corners-reborn
-      window-is-ready-remover
-      window-title-is-back
-      # ...
-    ];
+    blur-my-shell
+    appindicator
+    arcmenu
+    bluetooth-battery-meter
+    brightness-control-using-ddcutil
+    burn-my-windows
+    caffeine
+    clipboard-indicator
+    dynamic-calendar-and-clocks-icons
+    foresight
+    fullscreen-to-empty-workspace
+    fuzzy-app-search
+    gsconnect
+    just-perfection
+    kando-integration
+    media-progress
+    osd-volume-number
+    quick-settings-tweaker
+    rounded-window-corners-reborn
+    window-is-ready-remover
+    window-title-is-back
+    # ...
+  ];
 }

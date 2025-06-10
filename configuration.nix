@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       # Desktop Environment Selection
       ./gnome.nix
+      ./kde.nix
       ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
@@ -64,6 +65,14 @@
     in
     "${alsa-ucm-conf}/ucm2";
 
+  programs.dconf.profiles.user.databases = [
+    {
+      settings."org/gnome/desktop/interface" = {
+        gtk-theme = "Adwaita";
+        color-scheme = "prefer-dark";
+      };
+    }
+  ];
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -185,9 +194,11 @@
     # Special GUI software center package
     # inputs.nix-software-center.packages.${system}.nix-software-center
     # Packages
+    inputs.quickshell.packages.${system}.default
     adw-gtk3
     ani-cli
     better-control
+    bitwarden-desktop
     cargo
     celluloid
     dconf
@@ -220,7 +231,7 @@
     pay-respects
     pciutils
     prismlauncher
-    python3
+    python313
     r2modman
     resources
     sbctl
@@ -228,7 +239,7 @@
     # steamtinkerlaunch
     stow
     usbutils
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim-full # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     vscode
     vscode.fhs
     wget
