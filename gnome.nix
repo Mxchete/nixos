@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
-  # services.displayManager.gdm.enable = true;
-  # services.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.wayland = true;
   services.desktopManager.gnome.enable = true;
   services.udev.packages = [ pkgs.gnome-settings-daemon ];
   services.sysprof.enable = true;

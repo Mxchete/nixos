@@ -10,8 +10,9 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Desktop Environment Selection
-      ./gnome.nix
-      ./kde.nix
+      # ./gnome.nix
+      # ./kde.nix
+      ./specialisation.nix
       ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
@@ -153,9 +154,9 @@
     dates = "daily";
   };
 
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
-  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -209,6 +210,7 @@
     flatpak
     fzf
     gcc
+    gdm-settings
     ghostty
     git
     gnome-boxes
@@ -226,6 +228,7 @@
     nexusmods-app-unfree
     openloco
     openrct2
+    openrgb-with-all-plugins
     oreo-cursors-plus
     pavucontrol
     pay-respects
@@ -252,6 +255,7 @@
 
   # Services
   services.flatpak.enable = true;
+  services.hardware.openrgb.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
