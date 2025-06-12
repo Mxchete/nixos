@@ -15,7 +15,7 @@
   };
   programs.kdeconnect = {
     enable = true;
-    # package = pkgs.gnomeExtensions.gsconnect;
+    package = pkgs.gnomeExtensions.gsconnect;
   };
   environment.systemPackages = with pkgs.gnomeExtensions; [
     blur-my-shell

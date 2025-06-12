@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
@@ -19,7 +20,7 @@
   boot.initrd.systemd.enable = true;
   boot.plymouth = {
     enable = true;
-    # theme = "rings";
+    # theme = "rings"; # Consider themes in the future?
   };
   boot.extraModprobeConfig = ''
     options snd-hda-intel model=alc4080
@@ -38,7 +39,7 @@
   boot.loader.timeout = 0;
 
   nixpkgs.config.nvidia.acceptLicense = true;
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   environment.variables = {
     GBM_BACKEND = "nvidia-drm";
@@ -46,22 +47,7 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
-  # environment.sessionVariables.ALSA_CONFIG_UCM2 = let
-  #   # Updated version with https://github.com/alsa-project/alsa-ucm-conf/issues/123 bugfix.
-  #   alsa-ucm-conf = pkgs.fetchFromGitHub {
-  #     owner  = "alsa-project";
-  #     repo   = "alsa-ucm-conf";
-  #     rev    = "7dda1e21fff6163abfd681380b054f514b3b43bc";
-  #     sha256 = "15zlb25dd6v1vdc21mkld75d1q661xhnljk2yfpz25pkjwq7lq9v";
-  #   };
-  # in "${alsa-ucm-conf}/ucm2";
-
   environment.systemPackages = with pkgs; [
-    # alsa-oss
-    # alsa-firmware
-    # alsa-utils
-    # alsa-tools
-    # alsa-ucm-conf
     sof-firmware
     vulkan-loader
     vulkan-validation-layers
@@ -90,12 +76,14 @@
   hardware.nvidia-container-toolkit.enable = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/ROOT";
+    {
+      device = "/dev/disk/by-label/ROOT";
       fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-label/BOOT";
+    {
+      device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };

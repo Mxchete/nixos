@@ -11,16 +11,12 @@
       ./hardware-configuration.nix
       # Desktop Environment Selection
       ./gnome.nix
-      ./kde.nix
+      # ./kde.nix
       # ./specialisation.nix
       ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
     ];
-
-  # nixpkgs.overlays = [
-  #   ( import ./overlays/alsa-ucm-conf.nix )
-  # ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -56,12 +52,11 @@
 
   environment.sessionVariables.ALSA_CONFIG_UCM2 =
     let
-      # Updated version with https://github.com/alsa-project/alsa-ucm-conf/issues/123 bugfix.
       alsa-ucm-conf = pkgs.fetchFromGitHub {
         owner = "alsa-project";
         repo = "alsa-ucm-conf";
         rev = "v1.2.14";
-        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA="; # Replace this
+        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";
       };
     in
     "${alsa-ucm-conf}/ucm2";
@@ -81,11 +76,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  # services.avahi = {
-  #   enable = true;
-  #   nssmdns4 = true;
-  #   # openfirewall = true;
-  # };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    # openfirewall = true;
+  };
 
   # Bluetooth
   hardware.bluetooth.enable = true;
@@ -161,11 +156,8 @@
   virtualisation = {
     podman = {
       enable = true;
-      # enableNvidia = true;
-
       # Create a `docker` alias for podman, to use it as a drop-in replacement
       dockerCompat = true;
-
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
@@ -192,8 +184,6 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    # Special GUI software center package
-    # inputs.nix-software-center.packages.${system}.nix-software-center
     # Packages
     inputs.quickshell.packages.${system}.default
     adw-gtk3
@@ -238,11 +228,10 @@
     r2modman
     resources
     sbctl
-    # steam
-    # steamtinkerlaunch
     stow
+    tmux
     usbutils
-    vim-full # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim-full
     vscode
     vscode.fhs
     wget
@@ -250,10 +239,9 @@
     wl-clipboard
   ];
 
-  # GUI TODO: Spin into seperate files for each GUI
-  services.xserver.enable = true;
 
   # Services
+  services.xserver.enable = true;
   services.flatpak.enable = true;
   services.hardware.openrgb.enable = true;
 
