@@ -10,9 +10,9 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Desktop Environment Selection
-      # ./gnome.nix
-      # ./kde.nix
-      ./specialisation.nix
+      ./gnome.nix
+      ./kde.nix
+      # ./specialisation.nix
       ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
@@ -81,11 +81,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    # openfirewall = true;
-  };
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   # openfirewall = true;
+  # };
 
   # Bluetooth
   hardware.bluetooth.enable = true;
