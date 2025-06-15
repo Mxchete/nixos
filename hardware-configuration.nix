@@ -18,6 +18,7 @@
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.consoleMode = "max";
   boot.initrd.systemd.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.plymouth = {
     enable = true;
     # theme = "rings"; # Consider themes in the future?
@@ -35,6 +36,8 @@
     "boot.shell_on_fail"
     "udev.log_priority=3"
     "rd.systemd.show_status=auto"
+    "nvidia_drm.fbdev=1"
+    "nvidia-drm.modeset=1"
   ];
   boot.loader.timeout = 0;
 
@@ -45,6 +48,7 @@
     GBM_BACKEND = "nvidia-drm";
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
   };
 
   environment.systemPackages = with pkgs; [
@@ -52,6 +56,16 @@
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools
+    # Test
+    libva-utils
+    vdpauinfo
+    egl-wayland
+    wgpu-utils
+    mesa
+    libglvnd
+    # nvtop
+    nvitop
+    libGL
   ];
 
   hardware = {
@@ -67,10 +81,21 @@
     nvidia = {
       modesetting.enable = true;
       powerManagement.enable = true;
+      forceFullCompositionPipeline = true;
       # powerManagement.finegrained = true;
       open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       nvidiaSettings = true;
+      # prime = {
+      #   offload = {
+      #     enable = true;
+      #     enableOffloadCmd = true;
+      #   };
+      #   # Make sure to use the correct Bus ID values for your system!
+      #   # intelBusId = "PCI:0:2:0";
+      #   nvidiaBusId = "PCI:1:0:0";
+      #   amdgpuBusId = "PCI:79:0:0";
+      # };
     };
   };
   hardware.nvidia-container-toolkit.enable = true;
@@ -86,6 +111,13 @@
       device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/windows" =
+    {
+      device = "/dev/disk/by-uuid/F0AEE989AEE948A4";
+      fsType = "ntfs-3g";
+      options = [ "rw" "uid=1000" ];
     };
 
   swapDevices = [{

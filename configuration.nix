@@ -201,6 +201,7 @@
     fzf
     gcc
     gdm-settings
+    geekbench
     ghostty
     git
     gnome-boxes
@@ -213,7 +214,9 @@
     libreoffice
     limo
     # minecraft # Currently Broken ???
+    mangohud
     morewaita-icon-theme
+    mpv
     neovim
     nexusmods-app-unfree
     openloco
@@ -229,6 +232,7 @@
     resources
     sbctl
     stow
+    timeshift
     tmux
     usbutils
     vim-full
@@ -237,6 +241,8 @@
     wget
     wirelesstools
     wl-clipboard
+    yt-dlp
+    xorg.xeyes
   ];
 
 
@@ -244,6 +250,7 @@
   services.xserver.enable = true;
   services.flatpak.enable = true;
   services.hardware.openrgb.enable = true;
+  # services.smartd.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
