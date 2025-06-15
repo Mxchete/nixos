@@ -48,6 +48,7 @@
             home-manager.users.mxchete = import ./home;
             home-manager.extraSpecialArgs = inputs; # from the passed down input, we can pass these as args to `home.nix`
           }
+          ./modules/auto-upgrade.nix
         ];
       };
     };

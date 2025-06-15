@@ -137,17 +137,17 @@
     options = "--delete-older-than 30d";
   };
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      # "--no-write-lock-file"
-      "-L" # print build logs
-    ];
-    dates = "daily";
-  };
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   flake = inputs.self.outPath;
+  # flags = [
+  #   "--update-input"
+  #   "nixpkgs"
+  #   # "--no-write-lock-file"
+  #   "-L" # print build logs
+  # ];
+  #   dates = "daily";
+  # };
 
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.host.enableExtensionPack = true;
