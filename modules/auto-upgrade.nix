@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   username = "mxchete";
   flakePath = inputs.self.outPath;
@@ -20,6 +20,7 @@ in
         User = username;
       };
       before = [ "nixos-upgrade.service" ];
+      requiredBy = [ "nixos-upgrade.service" ];
       path = [ pkgs.nix pkgs.git pkgs.host ];
     };
   };
