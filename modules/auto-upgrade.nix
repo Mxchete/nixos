@@ -27,7 +27,7 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    dates = "15:12";
-    flake = flakePath;
+    dates = "daily";
+    flake = inputs.self.outPath;
   };
 }
