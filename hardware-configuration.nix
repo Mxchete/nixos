@@ -84,7 +84,7 @@
       forceFullCompositionPipeline = true;
       # powerManagement.finegrained = true;
       open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       nvidiaSettings = true;
       # prime = {
       #   offload = {

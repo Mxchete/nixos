@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 let
   username = "mxchete";
-  flakePath = inputs.self.outPath;
+  flakePath = "/etc/nixos/";
 in
 {
   systemd.services = {
@@ -27,7 +27,7 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    dates = "daily";
+    dates = "15:12";
     flake = flakePath;
   };
 }
