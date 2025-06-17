@@ -49,6 +49,7 @@
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+    NVPRESENT_ENABLE_SMOOTH_MOTION = 1;
   };
 
   environment.systemPackages = with pkgs; [

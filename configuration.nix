@@ -10,10 +10,6 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Desktop Environment Selection
-      ./gnome.nix
-      # ./kde.nix
-      # ./specialisation.nix
-      ./hyprland.nix
       # System Modules
       ./modules/fonts.nix
     ];
@@ -208,6 +204,7 @@
     gnome-software
     gnome-tweaks
     google-chrome
+    goverlay
     heroic
     kando
     kdePackages.ocean-sound-theme
