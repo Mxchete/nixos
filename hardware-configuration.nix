@@ -12,6 +12,7 @@
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" ];
+  boot.blacklistedKernelModules = [ "i915" ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [ "kvm-amd" ];
@@ -49,10 +50,10 @@
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
-    NVPRESENT_ENABLE_SMOOTH_MOTION = 1;
   };
 
   environment.systemPackages = with pkgs; [
+    linux-firmware
     sof-firmware
     vulkan-loader
     vulkan-validation-layers

@@ -28,6 +28,21 @@ in
   system.autoUpgrade = {
     enable = true;
     dates = "daily";
+    persistent = true;
     flake = inputs.self.outPath;
+  };
+  systemd.services.nixos-upgrade = {
+    preStart = "${pkgs.host}/bin/host example.com";
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "120";
+    };
+    unitConfig = {
+      StartLimitIntervalSec = 600;
+      StartLimitBurst = 2;
+    };
+    after = [ "flake-update.service" ];
+    wants = [ "flake-update.service" ];
+    path = [ pkgs.host ];
   };
 }

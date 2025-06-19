@@ -28,8 +28,12 @@
       # Mismatched system dependencies will lead to crashes and other issues.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ... }@inputs: {
     nixosConfigurations = {
       tengoku = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -37,11 +41,15 @@
           inherit inputs; # this passes down the inputs
         };
         modules = [
+          ./modules/specialisation.nix
           ./configuration.nix
           chaotic.nixosModules.default
+          nur.modules.nixos.default
           lanzaboote.nixosModules.lanzaboote
           ./modules/lanza.nix
           ./modules/gnome.nix
+          ./modules/sddm.nix
+          ./modules/kde.nix
           ./modules/hyprland.nix
           home-manager.nixosModules.home-manager
           {
