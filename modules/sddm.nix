@@ -18,7 +18,7 @@ in
   services.displayManager.sddm = {
     enable = lib.mkDefault true;
     theme = "breeze";
-    wayland.enable = true;
+    wayland.enable = false;
   };
   environment.systemPackages = with pkgs; [
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''

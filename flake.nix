@@ -41,15 +41,15 @@
           inherit inputs; # this passes down the inputs
         };
         modules = [
-          ./modules/specialisation.nix
+          # ./modules/specialisation.nix
           ./configuration.nix
           chaotic.nixosModules.default
           nur.modules.nixos.default
           lanzaboote.nixosModules.lanzaboote
           ./modules/lanza.nix
           ./modules/gnome.nix
-          ./modules/sddm.nix
-          ./modules/kde.nix
+          # ./modules/sddm.nix
+          # ./modules/kde.nix
           ./modules/hyprland.nix
           home-manager.nixosModules.home-manager
           {
