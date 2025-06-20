@@ -49,7 +49,7 @@
           ./modules/lanza.nix
           ./modules/gnome.nix
           # ./modules/sddm.nix
-          # ./modules/kde.nix
+          ./modules/kde.nix
           ./modules/hyprland.nix
           home-manager.nixosModules.home-manager
           {

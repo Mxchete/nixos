@@ -1,24 +1,30 @@
 { config, lib, pkgs, ... }:
 
 let
-  # Define the custom background package with the correct relative path
   background-package = pkgs.stdenvNoCC.mkDerivation {
     name = "background-image";
-    src = ./wallpaper.png; # Place wallpaper.jpg in the same directory as this config file
+    src = ./wallpaper.png;
     dontUnpack = true;
     installPhase = ''
       cp $src $out
     '';
   };
+  sddmVT1 = pkgs.kdePackages.sddm.overrideDerivation (prev: {
+    cmakeFlags = (prev.cmakeFlags) ++ [
+      "-DSDDM_INITIAL_VT=1"
+    ];
+  });
 
 in
 {
-  # X11 and KDE Plasma configuration
   services.xserver.enable = true;
   services.displayManager.sddm = {
+    package = lib.mkForce sddmVT1;
     enable = lib.mkDefault true;
+    enableHidpi = true;
     theme = "breeze";
-    wayland.enable = false;
+    wayland.enable = true;
+    wayland.compositor = "kwin";
   };
   environment.systemPackages = with pkgs; [
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''

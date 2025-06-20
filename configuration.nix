@@ -158,7 +158,7 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true; # Broken, python version issue
 
   programs.gamescope = {
     enable = true;

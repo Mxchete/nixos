@@ -11,7 +11,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   boot.blacklistedKernelModules = [ "i915" ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
@@ -37,10 +37,17 @@
     "boot.shell_on_fail"
     "udev.log_priority=3"
     "rd.systemd.show_status=auto"
+    "systemd.show_status=auto"
     "nvidia_drm.fbdev=1"
     "nvidia-drm.modeset=1"
+    "rd.udev.log_level=3"
+    "vt.global_cursor_default=0"
   ];
   boot.loader.timeout = 0;
+  console = {
+    useXkbConfig = true;
+    earlySetup = true;
+  };
 
   nixpkgs.config.nvidia.acceptLicense = true;
   services.xserver.videoDrivers = [ "nvidia" ];
