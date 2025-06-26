@@ -147,6 +147,7 @@
 
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.libvirtd.enable = true;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
   virtualisation.containers.enable = true;
   virtualisation = {
@@ -158,7 +159,11 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
-  # virtualisation.waydroid.enable = true; # Broken, python version issue
+  virtualisation.waydroid.enable = true; # Broken, python version issue
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "riscv64-linux"
+  ];
 
   programs.gamescope = {
     enable = true;
@@ -226,8 +231,10 @@
     pciutils
     prismlauncher
     python313
+    qemu
     r2modman
     resources
+    ripgrep
     sbctl
     stow
     timeshift

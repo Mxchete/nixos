@@ -1,5 +1,5 @@
 # modules/fonts.nix
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   fonts = {
     fontconfig = {
@@ -13,6 +13,8 @@
       nerd-fonts.symbols-only
       nerd-fonts.caskaydia-cove
       nerd-fonts.caskaydia-mono
+      corefonts
+      vistafonts
     ];
   };
 }

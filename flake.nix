@@ -21,6 +21,10 @@
     #   url = "github:hyprwm/hyprland-plugins";
     #   inputs.hyprland.follows = "hyprland";
     # };
+    kwin-effects-forceblur = {
+      url = "github:taj-ny/kwin-effects-forceblur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
 
@@ -48,7 +52,8 @@
           lanzaboote.nixosModules.lanzaboote
           ./modules/lanza.nix
           ./modules/gnome.nix
-          # ./modules/sddm.nix
+          ./modules/signon/signond.nix
+          ./modules/sddm.nix
           ./modules/kde.nix
           ./modules/hyprland.nix
           home-manager.nixosModules.home-manager

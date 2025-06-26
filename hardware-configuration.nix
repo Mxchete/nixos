@@ -22,31 +22,38 @@
   boot.supportedFilesystems = [ "ntfs" ];
   boot.plymouth = {
     enable = true;
+    # theme = "breeze";
     # theme = "rings"; # Consider themes in the future?
   };
   boot.extraModprobeConfig = ''
     options snd-hda-intel model=alc4080
+    options nvidia NVreg_UsePageAttributeTable=1 NVreg_RegistryDwords=RMUseSwI2c=0x01;RMI2cSpeed=100
   '';
 
   # Silent Boot
-  boot.consoleLogLevel = 3;
+  boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.kernelParams = [
     "quiet"
+    "loblevel=0"
     "splash"
+    # "console=tty0"
+    # "console=tty7"
+    # "plymouth.nolog"
     "boot.shell_on_fail"
-    "udev.log_priority=3"
-    "rd.systemd.show_status=auto"
-    "systemd.show_status=auto"
+    "udev.log_priority=0"
+    "rd.systemd.show_status=false"
+    "systemd.show_status=false"
     "nvidia_drm.fbdev=1"
     "nvidia-drm.modeset=1"
-    "rd.udev.log_level=3"
+    "rd.udev.log_level=0"
     "vt.global_cursor_default=0"
   ];
   boot.loader.timeout = 0;
   console = {
-    useXkbConfig = true;
-    earlySetup = true;
+    enable = lib.mkForce false;
+    # useXkbConfig = true;
+    # earlySetup = true;
   };
 
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -91,6 +98,7 @@
       modesetting.enable = true;
       powerManagement.enable = true;
       forceFullCompositionPipeline = true;
+      nvidiaPersistenced = true;
       # powerManagement.finegrained = true;
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.latest;

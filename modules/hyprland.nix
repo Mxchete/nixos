@@ -36,7 +36,7 @@
     # python313Packages.numpy
     cava
     bluez-tools
-    ddcutil
+    # ddcutil
     brightnessctl
     imagemagick
     linux-wallpaperengine
