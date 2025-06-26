@@ -1,6 +1,18 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+  nixpkgs.overlays = [
+    # Missing packages for KIO GDrive
+    (final: prev: {
+      kdePackages = prev.kdePackages // {
+        signon-plugin-oauth2 = final.kdePackages.callPackage ../packages/signon-plugin-oauth2 { };
+        signond = final.kdePackages.callPackage ../packages/signond {
+          inherit (final.kdePackages) signon-plugin-oauth2;
+        };
+        signon-ui = final.kdePackages.callPackage ../packages/signon-ui { };
+      };
+    })
+  ];
   # services.displayManager.gdm.enable = lib.mkForce false;
   # services.displayManager.gdm.wayland = lib.mkForce false;
   # services.displayManager.sddm.enable = true;
@@ -42,8 +54,12 @@
     darkly
     nur.repos.shadowrz.klassy-qt6
     inputs.kwin-effects-forceblur.packages.${pkgs.system}.default
-    # kdePackages.signond
-    signond
+    (kdePackages.signond.override {
+      withOAuth2 = true;
+      withKWallet = true;
+    })
+    kdePackages.signon-plugin-oauth2
+    kdePackages.signon-ui
   ];
   # environment.plasma6.excludePackages = with pkgs.kdePackages; [
   #   # kdeconnect
