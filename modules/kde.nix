@@ -49,6 +49,7 @@
     kdePackages.kio-gdrive
     kdePackages.dynamic-workspaces
     kdePackages.qtmultimedia
+    kdiff3
     glava
     papirus-icon-theme
     darkly

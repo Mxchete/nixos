@@ -4,6 +4,14 @@ let
   flakePath = "/etc/nixos/";
 in
 {
+  # Should hopefully fix the problem where upgrade fails on boot
+  systemd.timers.bootUpgradeDelay = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "2min";
+      Unit = "nixos-upgrade.service";
+    };
+  };
   systemd.services = {
     flake-update = {
       preStart = "${pkgs.host}/bin/host example.com"; # Check network connectivity
@@ -44,5 +52,17 @@ in
     after = [ "flake-update.service" ];
     wants = [ "flake-update.service" ];
     path = [ pkgs.host ];
+  };
+
+  systemd.services.nixos-upgrade.onFailure = [ "notify-failure@nixos-upgrade.service" ];
+  systemd.services."notify-failure@" = {
+    enable = true;
+    description = "Failure notification for %i";
+    path = [ pkgs.nix ];
+    serviceConfig = {
+      ExecStart = ''
+        ${pkgs.libnotify}/bin/notify-send "nixos-upgrade.service: Build Failure :(  Please retry the update manually" && exit
+      '';
+    };
   };
 }

@@ -36,7 +36,6 @@ in
 {
   # systemd.services."getty@tty7.service".wantedBy = [ ];
   # services.getty.enable = false;
-  # systemd.services."getty@tty1".enable = true;
   # systemd.units."getty@tty1.service" = {
   #   overrideStrategy = "asDropin";
   #   text = ''
@@ -45,7 +44,10 @@ in
   #     ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --noclear %I $TERM
   #   '';
   # };
-  # systemd.services."autovt@tty7".enable = true;
+  systemd.services."autovt@tty7".enable = lib.mkForce true;
+  systemd.services."getty@tty7".enable = lib.mkForce true;
+  systemd.services."autovt@tty1".enable = lib.mkForce false;
+  # systemd.services."getty@tty1".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -60,6 +62,7 @@ in
     theme = "breeze";
     wayland.enable = false;
     wayland.compositor = "kwin";
+    settings = { Theme.CursorTheme = "Adwaita"; };
     # settings.General.DisplayServer = "x11-user";
   };
   environment.systemPackages = with pkgs; [

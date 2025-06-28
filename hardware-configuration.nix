@@ -51,9 +51,9 @@
   ];
   boot.loader.timeout = 0;
   console = {
-    enable = lib.mkForce false;
-    # useXkbConfig = true;
-    # earlySetup = true;
+    # enable = lib.mkForce false; # Turn off console to keep silent boot when using sddm (not ideal)
+    useXkbConfig = true;
+    earlySetup = true;
   };
 
   nixpkgs.config.nvidia.acceptLicense = true;

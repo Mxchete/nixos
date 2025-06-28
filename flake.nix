@@ -32,12 +32,15 @@
       # Mismatched system dependencies will lead to crashes and other issues.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, ... }@inputs: {
     nixosConfigurations = {
       tengoku = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -47,12 +50,16 @@
         modules = [
           # ./modules/specialisation.nix
           ./configuration.nix
+          ({ pkgs, ... }: {
+            environment.systemPackages = [
+              ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+            ];
+          })
           chaotic.nixosModules.default
           nur.modules.nixos.default
           lanzaboote.nixosModules.lanzaboote
           ./modules/lanza.nix
           ./modules/gnome.nix
-          ./modules/signon/signond.nix
           ./modules/sddm.nix
           ./modules/kde.nix
           ./modules/hyprland.nix

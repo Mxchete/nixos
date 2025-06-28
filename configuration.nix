@@ -204,7 +204,6 @@
     gcc
     gdm-settings
     geekbench
-    ghostty
     git
     gnome-boxes
     gnome-software
@@ -212,8 +211,12 @@
     google-chrome
     goverlay
     heroic
+    ifuse
     kando
     kdePackages.ocean-sound-theme
+    kitty
+    libimobiledevice
+    libnotify
     libreoffice
     limo
     # minecraft # Currently Broken ???
@@ -255,6 +258,7 @@
   services.xserver.enable = true;
   services.flatpak.enable = true;
   services.hardware.openrgb.enable = true;
+  services.usbmuxd.enable = true;
   # services.smartd.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
