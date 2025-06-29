@@ -55,13 +55,29 @@ in
   environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID";
   # security.pam.services.gdm-password.enableGnomeKeyring = true;
   security.pam.services.sddm-password.enableGnomeKeyring = true;
+  systemd.services.disable-wall-messages = {
+    description = "Disable systemd wall messages";
+    wantedBy = [ "graphical.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = ''
+        ${pkgs.systemd}/bin/busctl set-property \
+          org.freedesktop.login1 \
+          /org/freedesktop/login1 \
+          org.freedesktop.login1.Manager \
+          EnableWallMessages \
+          b false
+      '';
+    };
+  };
+
   services.displayManager.sddm = {
     # package = lib.mkForce sddmVT1;
     enable = lib.mkDefault true;
     enableHidpi = true;
     theme = "breeze";
-    wayland.enable = false;
-    wayland.compositor = "kwin";
+    wayland.enable = true;
+    # wayland.compositor = "kwin";
     settings = { Theme.CursorTheme = "Adwaita"; };
     # settings.General.DisplayServer = "x11-user";
   };

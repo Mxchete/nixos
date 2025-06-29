@@ -12,7 +12,7 @@
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
-  boot.blacklistedKernelModules = [ "i915" ];
+  boot.blacklistedKernelModules = [ "i915" "amdgpu" ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [ "kvm-amd" ];
@@ -22,6 +22,8 @@
   boot.supportedFilesystems = [ "ntfs" ];
   boot.plymouth = {
     enable = true;
+    themePackages = [ pkgs.mikuboot ];
+    theme = "mikuboot";
     # theme = "breeze";
     # theme = "rings"; # Consider themes in the future?
   };
@@ -35,15 +37,15 @@
   boot.initrd.verbose = false;
   boot.kernelParams = [
     "quiet"
-    "loblevel=0"
-    "splash"
+    "loglevel=0"
+    "splash=silent"
     # "console=tty0"
     # "console=tty7"
     # "plymouth.nolog"
     "boot.shell_on_fail"
     "udev.log_priority=0"
-    "rd.systemd.show_status=false"
-    "systemd.show_status=false"
+    "rd.systemd.show_status=auto"
+    "systemd.show_status=auto"
     "nvidia_drm.fbdev=1"
     "nvidia-drm.modeset=1"
     "rd.udev.log_level=0"

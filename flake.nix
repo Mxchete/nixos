@@ -39,8 +39,12 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mikuboot = {
+      url = "gitlab:evysgarden/mikuboot";
+      inputs.nixpkgs.follows = ""; # only useful for the package output
+    };
   };
-  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, mikuboot, ... }@inputs: {
     nixosConfigurations = {
       tengoku = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -55,6 +59,7 @@
               ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
           })
+          mikuboot.nixosModules.default
           chaotic.nixosModules.default
           nur.modules.nixos.default
           lanzaboote.nixosModules.lanzaboote
