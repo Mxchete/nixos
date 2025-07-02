@@ -77,8 +77,10 @@ in
     enableHidpi = true;
     theme = "breeze";
     wayland.enable = true;
-    # wayland.compositor = "kwin";
-    settings = { Theme.CursorTheme = "Adwaita"; };
+    wayland.compositor = "kwin";
+    settings = {
+      Theme.CursorTheme = "Adwaita";
+    };
     # settings.General.DisplayServer = "x11-user";
   };
   environment.systemPackages = with pkgs; [

@@ -219,6 +219,7 @@
     libnotify
     libreoffice
     limo
+    localsend
     # minecraft # Currently Broken ???
     mangohud
     morewaita-icon-theme
@@ -239,6 +240,7 @@
     resources
     ripgrep
     sbctl
+    sshfs
     stow
     timeshift
     tmux

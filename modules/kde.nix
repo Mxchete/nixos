@@ -47,8 +47,13 @@
     kdePackages.kaccounts-integration
     kdePackages.kaccounts-providers
     kdePackages.kio-gdrive
+    kdePackages.kio-fuse
+    kdePackages.kio-extras
     kdePackages.dynamic-workspaces
     kdePackages.qtmultimedia
+    kdePackages.kzones
+    kdePackages.krfb
+    kdePackages.qtwebsockets
     kdiff3
     glava
     papirus-icon-theme

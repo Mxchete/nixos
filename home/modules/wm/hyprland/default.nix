@@ -54,8 +54,8 @@
       # Autostart necessary processes (like notifications daemons, status bars, etc.)
       # Or execute your favorite apps at launch like this:
 
-          exec-once = qs -c caelestia
-          exec-once = __GL_THREADED_OPTIMIZATIONS=0 linux-wallpaperengine 3056525856 --silent --screen-root DP-4
+          # exec-once = qs -c caelestia
+          exec-once = __GL_THREADED_OPTIMIZATIONS=0 linux-wallpaperengine 3056525856 --silent --screen-root DP-1
           exec-once = hyprctl setcursor Adwaita 24
       # exec-once = nm-applet &
       # exec-once = waybar & hyprpaper & firefox
@@ -226,13 +226,6 @@
               workspace_swipe = false
           }
 
-      # Example per-device config
-      # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
-          device {
-              name = epic-mouse-v1
-              sensitivity = -0.5
-          }
-
 
       ###################
       ### KEYBINDINGS ###
@@ -314,14 +307,14 @@
 
       # bindi = Super, Space, global, caelestia:launcher
       # bindin = Super, catchall, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:272, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:273, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:274, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:275, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:276, global, caelestia:launcherInterrupt
-          bindin = Super, mouse:277, global, caelestia:launcherInterrupt
-          bindin = Super, mouse_up, global, caelestia:launcherInterrupt
-          bindin = Super, mouse_down, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:272, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:273, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:274, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:275, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:276, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse:277, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse_up, global, caelestia:launcherInterrupt
+          # bindin = Super, mouse_down, global, caelestia:launcherInterrupt
 
       ##############################
       ### WINDOWS AND WORKSPACES ###
@@ -338,6 +331,9 @@
 
       # Fix some dragging issues with XWayland
           windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+
+      # Float Windows by default
+          windowrulev2 = float, class:.*
     '';
   };
   # wayland.windowManager.hyprland.settings = {

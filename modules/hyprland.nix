@@ -39,6 +39,7 @@
       aubio
       pyaudio
       numpy
+      websockets
     ]))
     # python313Packages.aubio
     # python313Packages.pyaudio

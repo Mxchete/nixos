@@ -4,14 +4,6 @@ let
   flakePath = "/etc/nixos/";
 in
 {
-  # Should hopefully fix the problem where upgrade fails on boot
-  systemd.timers.bootUpgradeDelay = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "2min";
-      Unit = "nixos-upgrade.service";
-    };
-  };
   systemd.services = {
     flake-update = {
       preStart = "${pkgs.host}/bin/host example.com"; # Check network connectivity
