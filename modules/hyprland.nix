@@ -14,8 +14,22 @@
       "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
     ];
   };
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors = {
+      hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/Hyprland";
+      };
+
+    };
+  };
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     # set the flake package
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # make sure to also set the portal package, so that they are in sync
@@ -25,6 +39,16 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   environment.systemPackages = with pkgs; [
+    hyprnome
+    hyprcursor
+    hyprutils
+    hyprlang
+    hyprpolkitagent
+    hyprlock
+    hypridle
+    hyprland-qtutils
+    hyprland-qt-support
+    hyprsysteminfo
     ags
     wofi
     jq

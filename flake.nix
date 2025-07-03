@@ -1,5 +1,5 @@
 {
-  description = "minimal starter flake.nix";
+  description = "NixOS Top Level flake.nix";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
@@ -43,6 +43,10 @@
       url = "gitlab:evysgarden/mikuboot";
       inputs.nixpkgs.follows = ""; # only useful for the package output
     };
+    hypr-dynamic-cursors = {
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
+    };
   };
   outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, mikuboot, ... }@inputs: {
     nixosConfigurations = {
@@ -72,9 +76,10 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; }; # from the passed down input, we can pass these as args to `home.nix`
             home-manager.users.mxchete = import ./home;
-            home-manager.extraSpecialArgs = inputs; # from the passed down input, we can pass these as args to `home.nix`
           }
+          # ./home
           ./modules/auto-upgrade.nix
         ];
       };

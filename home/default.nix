@@ -5,4 +5,5 @@
     ./modules/shell
     ./modules/wm/hyprland
   ];
+  wayland.windowManager.hyprland = { };
 }
