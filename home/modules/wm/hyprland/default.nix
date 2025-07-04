@@ -2,12 +2,18 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    systemd = {
+      enable = false;
+      variables = [ "--all" ];
+    };
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = [
-      pkgs.hyprlandPlugins.hyprexpo
-      pkgs.hyprlandPlugins.hyprbars
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix { })
+      (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
+        hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      })
     ];
     extraConfig = ''
       # #######################################################################################
@@ -139,9 +145,9 @@
               blur {
                   enabled = true
                   size = 3
-                  passes = 1
+                  passes = 3
 
-                  vibrancy = 0.1696
+                  vibrancy = 0.105
               }
           }
 
@@ -247,6 +253,8 @@
           bind = $mainMod, R, exec, $menu
           bind = $mainMod, P, pseudo, # dwindle
           bind = $mainMod, J, togglesplit, # dwindle
+          bind = $mainMod, tab, hyprexpo:expo, toggle
+          bind = $mainMod, L, hyprlock
 
       # Move focus with mainMod + arrow keys
           bind = $mainMod, left, movefocus, l
@@ -338,6 +346,9 @@
 
       # Float Windows by default
           windowrulev2 = float, class:.*
+
+      # Set zen size
+      windowrulev2 = size 1200 800, class:^(.*zen.*)$
 
       # Snap Windows
           general:snap {
@@ -447,7 +458,7 @@
             limit = 0.0
 
             # time in millseconds the cursor will stay magnified after a shake has ended
-            timeout = 2000
+            timeout = 1000
 
             # show cursor behaviour `tilt`, `rotate`, etc. while shaking
             effects = true
@@ -466,7 +477,7 @@
             # 0 / false - never use pixelated scaling
             # 1 / true  - use pixelated when no highres image
             # 2         - always use pixleated scaling
-            nearest = false
+            nearest = true
 
             # enable dedicated hyprcursor support
             enabled = true
@@ -480,7 +491,22 @@
             # see the shape-name property of shape rules for possible names
             # specifying clientside will use the actual shape, but will be pixelated
             fallback = clientside
+          }
         }
+
+      # Hyprexpo
+      plugin {
+          hyprexpo {
+              columns = 3
+              gap_size = 5
+              bg_col = rgb(111111)
+              workspace_method = center current # [center/first] [workspace] e.g. first 1 or center m+1
+
+              enable_gesture = true # laptop touchpad
+              gesture_fingers = 3  # 3 or 4
+              gesture_distance = 300 # how far is the "max"
+              gesture_positive = true # positive = swipe down. Negative = swipe up.
+          }
       }
     '';
   };

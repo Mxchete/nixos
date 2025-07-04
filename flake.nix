@@ -17,10 +17,10 @@
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
     };
-    # hyprland-plugins = {
-    #   url = "github:hyprwm/hyprland-plugins";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     kwin-effects-forceblur = {
       url = "github:taj-ny/kwin-effects-forceblur";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,7 +48,7 @@
       inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
     };
   };
-  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, mikuboot, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, mikuboot, hyprland, ... }@inputs: {
     nixosConfigurations = {
       tengoku = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
