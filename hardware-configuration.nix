@@ -144,6 +144,17 @@
     size = 16 * 1024; # 16GB
   }];
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = [ "/" ];
+  };
+
+  fileSystems = {
+    "/".options = [ "compress=zstd" "noatime" ];
+  };
+
+
   # Fstrim
   services.fstrim.enable = true;
 

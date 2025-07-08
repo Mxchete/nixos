@@ -254,7 +254,7 @@
           bind = $mainMod, P, pseudo, # dwindle
           bind = $mainMod, J, togglesplit, # dwindle
           bind = $mainMod, tab, hyprexpo:expo, toggle
-          bind = $mainMod, L, hyprlock
+          bind = $mainMod, L, exec, hyprlock
 
       # Move focus with mainMod + arrow keys
           bind = $mainMod, left, movefocus, l

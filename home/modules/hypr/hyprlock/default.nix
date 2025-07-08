@@ -1,7 +1,4 @@
 { config, ... }:
-let
-  # inherit (config.lib.stylix.colors) base00 base01 base05 base07;
-in
 {
   programs.hyprlock = {
     enable = true;
@@ -22,7 +19,7 @@ in
       input-field = {
         size = {
           width = 200;
-          height = 50;
+          height = 20;
         };
 
         outline_thickness = 3;
@@ -47,13 +44,13 @@ in
         text = "$TIME";
         # color = "${base05}";
         font_size = 50;
-        font_family = "Noto Sans";
+        font_family = "IBM Plex";
         position = {
           x = 0;
-          y = 80;
+          y = 200;
         };
-        halign = "center";
-        valign = "center";
+        # halign = "center";
+        # valign = "center";
       };
     };
   };
