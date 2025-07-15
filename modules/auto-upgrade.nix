@@ -4,47 +4,51 @@ let
   flakePath = "/etc/nixos/";
 in
 {
-  systemd.services = {
-    flake-update = {
-      preStart = "${pkgs.host}/bin/host example.com"; # Check network connectivity
-      unitConfig = {
-        Description = "Update flake inputs";
-        StartLimitIntervalSec = 300;
-        StartLimitBurst = 5;
-      };
-      serviceConfig = {
-        ExecStart = "${pkgs.nix}/bin/nix flake update --commit-lock-file --flake ${flakePath}";
-        Restart = "on-failure";
-        RestartSec = "30";
-        Type = "oneshot"; # Ensure that it finishes before starting nixos-upgrade
-        User = username;
-      };
-      before = [ "nixos-upgrade.service" ];
-      requiredBy = [ "nixos-upgrade.service" ];
-      path = [ pkgs.nix pkgs.git pkgs.host ];
-    };
-  };
+  # systemd.services = {
+  #   flake-update = {
+  #     preStart = "${pkgs.host}/bin/host example.com"; # Check network connectivity
+  #     unitConfig = {
+  #       Description = "Update flake inputs";
+  #       StartLimitIntervalSec = 300;
+  #       StartLimitBurst = 5;
+  #     };
+  #     serviceConfig = {
+  #       ExecStart = "${pkgs.nix}/bin/nix flake update --commit-lock-file --flake ${flakePath}";
+  #       Restart = "on-failure";
+  #       RestartSec = "30";
+  #       Type = "oneshot"; # Ensure that it finishes before starting nixos-upgrade
+  #       User = username;
+  #     };
+  #     before = [ "nixos-upgrade.service" ];
+  #     requiredBy = [ "nixos-upgrade.service" ];
+  #     path = [ pkgs.nix pkgs.git pkgs.host ];
+  #   };
+  # };
 
   system.autoUpgrade = {
     enable = true;
     dates = "daily";
     persistent = true;
     flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+    ];
   };
-  systemd.services.nixos-upgrade = {
-    preStart = "${pkgs.host}/bin/host example.com";
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "120";
-    };
-    unitConfig = {
-      StartLimitIntervalSec = 600;
-      StartLimitBurst = 2;
-    };
-    after = [ "flake-update.service" ];
-    wants = [ "flake-update.service" ];
-    path = [ pkgs.host ];
-  };
+  # systemd.services.nixos-upgrade = {
+  #   preStart = "${pkgs.host}/bin/host example.com";
+  #   serviceConfig = {
+  #     Restart = "on-failure";
+  #     RestartSec = "120";
+  #   };
+  #   unitConfig = {
+  #     StartLimitIntervalSec = 600;
+  #     StartLimitBurst = 2;
+  #   };
+  #   after = [ "flake-update.service" ];
+  #   wants = [ "flake-update.service" ];
+  #   path = [ pkgs.host ];
+  # };
 
   systemd.services.nixos-upgrade.onFailure = [ "notify-failure@nixos-upgrade.service" ];
   systemd.services."notify-failure@" = {

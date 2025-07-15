@@ -66,6 +66,16 @@
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+    # New Trying to Improve performance
+    GBM_BACKENDS_PATH = "/run/opengl-driver/lib/gbm";
+    __GL_THREADED_OPTIMIZATION = "1";
+    __GL_SHADER_CACHE = "1";
+    WLR_BACKEND = "vulkan";
+    XDG_SESSION_TYPE = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
+    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    # LD_LIBRARY_PATH = LD_LIBRARY_PATH ++ "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
   };
 
   environment.systemPackages = with pkgs; [
@@ -78,12 +88,16 @@
     libva-utils
     vdpauinfo
     egl-wayland
+    virtualgl
+    wayland
     wgpu-utils
     mesa
     libglvnd
     # nvtop
     nvitop
     libGL
+    glxinfo
+    clinfo
   ];
 
   hardware = {

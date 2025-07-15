@@ -54,6 +54,8 @@
     kdePackages.kzones
     kdePackages.krfb
     kdePackages.qtwebsockets
+    kdePackages.qt5compat
+    kdePackages.qtpositioning
     kdiff3
     glava
     papirus-icon-theme

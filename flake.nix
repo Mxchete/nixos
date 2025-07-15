@@ -47,43 +47,59 @@
       url = "github:VirtCode/hypr-dynamic-cursors";
       inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
     };
-  };
-  outputs = { self, nixpkgs, chaotic, lanzaboote, home-manager, nur, ghostty, mikuboot, hyprland, ... }@inputs: {
-    nixosConfigurations = {
-      tengoku = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs; # this passes down the inputs
-        };
-        modules = [
-          # ./modules/specialisation.nix
-          ./configuration.nix
-          ({ pkgs, ... }: {
-            environment.systemPackages = [
-              ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-            ];
-          })
-          mikuboot.nixosModules.default
-          chaotic.nixosModules.default
-          nur.modules.nixos.default
-          lanzaboote.nixosModules.lanzaboote
-          ./modules/lanza.nix
-          ./modules/gnome.nix
-          ./modules/sddm.nix
-          ./modules/kde.nix
-          ./modules/hyprland.nix
-          ./modules/niri.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; }; # from the passed down input, we can pass these as args to `home.nix`
-            home-manager.users.mxchete = import ./home;
-          }
-          # ./home
-          ./modules/auto-upgrade.nix
-        ];
-      };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+  outputs =
+    { self
+    , nixpkgs
+    , chaotic
+    , lanzaboote
+    , home-manager
+    , nur
+    , ghostty
+    , mikuboot
+    , hyprland
+    , niri
+    , ...
+    }@inputs: {
+      nixosConfigurations = {
+        tengoku = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs; # this passes down the inputs
+          };
+          modules = [
+            # ./modules/specialisation.nix
+            ./configuration.nix
+            ({ pkgs, ... }: {
+              environment.systemPackages = [
+                ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+              ];
+            })
+            mikuboot.nixosModules.default
+            chaotic.nixosModules.default
+            nur.modules.nixos.default
+            lanzaboote.nixosModules.lanzaboote
+            ./modules/lanza.nix
+            ./modules/gnome.nix
+            ./modules/sddm.nix
+            ./modules/kde.nix
+            ./modules/hyprland.nix
+            ./modules/niri.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; }; # from the passed down input, we can pass these as args to `home.nix`
+              home-manager.users.mxchete = import ./home;
+            }
+            # ./home
+            ./modules/auto-upgrade.nix
+          ];
+        };
+      };
+    };
 }
