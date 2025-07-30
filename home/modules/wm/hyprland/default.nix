@@ -9,7 +9,6 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
       (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
         hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

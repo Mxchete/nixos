@@ -12,7 +12,6 @@
       # Desktop Environment Selection
       # System Modules
       ./modules/fonts.nix
-      ./audio.nix
     ];
 
   nixpkgs.overlays = [
@@ -53,6 +52,16 @@
   # services.xserver.enable = true;
 
 
+  environment.sessionVariables.ALSA_CONFIG_UCM2 =
+    let
+      alsa-ucm-conf = pkgs.fetchFromGitHub {
+        owner = "alsa-project";
+        repo = "alsa-ucm-conf";
+        rev = "v1.2.14";
+        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";
+      };
+    in
+    "${alsa-ucm-conf}/ucm2";
 
   programs.dconf.profiles.user.databases = [
     {
@@ -82,7 +91,6 @@
   # Enable sound.
   # services.pulseaudio.enable = true;
   # OR
-  sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
