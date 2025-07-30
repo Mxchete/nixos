@@ -12,7 +12,14 @@
       # Desktop Environment Selection
       # System Modules
       ./modules/fonts.nix
+      ./audio.nix
     ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      jdk8 = final.openjdk8-bootstrap;
+    })
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -46,16 +53,6 @@
   # services.xserver.enable = true;
 
 
-  environment.sessionVariables.ALSA_CONFIG_UCM2 =
-    let
-      alsa-ucm-conf = pkgs.fetchFromGitHub {
-        owner = "alsa-project";
-        repo = "alsa-ucm-conf";
-        rev = "v1.2.14";
-        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";
-      };
-    in
-    "${alsa-ucm-conf}/ucm2";
 
   programs.dconf.profiles.user.databases = [
     {
@@ -85,6 +82,7 @@
   # Enable sound.
   # services.pulseaudio.enable = true;
   # OR
+  sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -139,7 +137,7 @@
 
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -150,8 +148,21 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 15d";
+    options = "--delete-older-than 7d";
   };
+
+  nix.settings.auto-optimise-store = true;
+
+  # TODO: Try this
+  #
+  # programs.nh = {
+  #   enable = true;
+  #
+  #   clean = {
+  #     enable = true;
+  #     extraArgs = "--keep 7";
+  #   };
+  # };
 
   # system.autoUpgrade = {
   #   enable = true;
@@ -233,6 +244,7 @@
     heroic
     ifuse
     kando
+    kdePackages.isoimagewriter
     kdePackages.ocean-sound-theme
     kitty
     libimobiledevice
@@ -246,6 +258,7 @@
     mpv
     neovim
     nexusmods-app-unfree
+    oneko
     openloco
     openrct2
     openrgb-with-all-plugins
@@ -299,6 +312,8 @@
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
+  # Enable this for testing ESP32
+  # networking.firewall.allowedTCPPorts = [ 3000 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

@@ -16,7 +16,7 @@
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   boot.loader.systemd-boot.consoleMode = "max";
   boot.initrd.systemd.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
@@ -88,6 +88,7 @@
     libva-utils
     vdpauinfo
     egl-wayland
+    eglexternalplatform
     virtualgl
     wayland
     wgpu-utils
@@ -98,6 +99,11 @@
     libGL
     glxinfo
     clinfo
+    alsa-oss
+    alsa-lib
+    alsa-utils
+    alsa-tools
+    alsa-plugins
   ];
 
   hardware = {
@@ -183,4 +189,6 @@
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  nix.settings.max-jobs = 16;
 }

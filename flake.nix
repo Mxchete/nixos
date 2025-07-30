@@ -47,10 +47,10 @@
       url = "github:VirtCode/hypr-dynamic-cursors";
       inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # niri = {
+    #   url = "github:sodiboo/niri-flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
   outputs =
     { self
@@ -62,7 +62,7 @@
     , ghostty
     , mikuboot
     , hyprland
-    , niri
+      # , niri
     , ...
     }@inputs: {
       nixosConfigurations = {
