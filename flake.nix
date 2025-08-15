@@ -88,6 +88,7 @@
             ./modules/sddm.nix
             ./modules/kde.nix
             ./modules/hyprland.nix
+            ./modules/hyprpanel.nix
             ./modules/niri.nix
             home-manager.nixosModules.home-manager
             {

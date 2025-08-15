@@ -9,6 +9,13 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  boot.plymouth = {
+    enable = true;
+    # themePackages = [ pkgs.mikuboot ];
+    # theme = "mikuboot";
+    # theme = "breeze";
+    # theme = "rings"; # Consider themes in the future?
+  };
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
@@ -16,17 +23,10 @@
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
+  # boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   boot.loader.systemd-boot.consoleMode = "max";
   boot.initrd.systemd.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
-  boot.plymouth = {
-    enable = true;
-    themePackages = [ pkgs.mikuboot ];
-    # theme = "mikuboot";
-    # theme = "breeze";
-    # theme = "rings"; # Consider themes in the future?
-  };
   boot.extraModprobeConfig = ''
     options snd-hda-intel model=alc4080
     options nvidia NVreg_UsePageAttributeTable=1 NVreg_RegistryDwords=RMUseSwI2c=0x01;RMI2cSpeed=100
@@ -76,6 +76,7 @@
     WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
     VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     # LD_LIBRARY_PATH = LD_LIBRARY_PATH ++ "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
+    GSK_RENDERER = "ngl";
   };
 
   environment.systemPackages = with pkgs; [
@@ -124,6 +125,7 @@
       # powerManagement.finegrained = true;
       open = true;
       # package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # TODO: Figure out how to update drivers without breaking plymouth
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
         version = "575.64.05";
         sha256_64bit = "sha256-hfK1D5EiYcGRegss9+H5dDr/0Aj9wPIJ9NVWP3dNUC0=";

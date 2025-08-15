@@ -109,7 +109,7 @@ in
 
   # Here until it warrants its own file
   services.displayManager.ly = {
-    enable = false;
+    enable = true;
     settings = {
       animate = true;
       animation = "matrix";

@@ -73,7 +73,7 @@ in
 
   services.displayManager.sddm = {
     # package = lib.mkForce sddmVT1;
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     enableHidpi = true;
     theme = "breeze";
     wayland.enable = true;
