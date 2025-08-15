@@ -1,4 +1,28 @@
-{ inputs, lib, pkgs, ... }:
+{ inputs, lib, pkgs, config, ... }:
+let
+  inherit (lib)
+    concatMapStrings
+    attrNames
+    getAttr
+    mkIf
+    mkOption
+    mkEnableOption
+    mkPackageOption
+    ;
+
+  dmcfg = config.services.displayManager;
+  xcfg = config.services.xserver;
+  xdmcfg = xcfg.displayManager;
+  cfg = config.services.displayManager.ly;
+  xEnv = config.systemd.services.display-manager.environment;
+
+  xserverWrapper = pkgs.writeShellScript "xserver-wrapper" ''
+    ${concatMapStrings (n: ''
+      export ${n}="${getAttr n xEnv}"
+    '') (attrNames xEnv)}
+    exec systemd-cat -t xserver-wrapper ${xdmcfg.xserverBin} ${toString xdmcfg.xserverArgs} "$@"
+  '';
+in
 {
   nix.settings = {
     substituters = [
@@ -94,6 +118,9 @@
       bigclock_seconds = true;
       clear_password = true;
       tty = lib.mkForce 7;
+      x_cmd = lib.mkForce (lib.optionalString config.services.xserver.enable xserverWrapper + " > /dev/null 2>&1");
+      vi_default_mode = "insert";
+      vi_mode = true;
     };
   };
 }

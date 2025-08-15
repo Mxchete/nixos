@@ -36,9 +36,9 @@
       # Mismatched system dependencies will lead to crashes and other issues.
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
+    # ghostty = {
+    #   url = "github:ghostty-org/ghostty";
+    # };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,7 +59,7 @@
     , lanzaboote
     , home-manager
     , nur
-    , ghostty
+      # , ghostty
     , mikuboot
       # , hyprland
       # , niri
@@ -76,7 +76,7 @@
             ./configuration.nix
             ({ pkgs, ... }: {
               environment.systemPackages = [
-                ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+                # ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
               ];
             })
             mikuboot.nixosModules.default

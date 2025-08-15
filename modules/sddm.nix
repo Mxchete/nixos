@@ -44,9 +44,9 @@ in
   #     ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --noclear %I $TERM
   #   '';
   # };
-  systemd.services."autovt@tty7".enable = lib.mkForce true;
-  systemd.services."getty@tty7".enable = lib.mkForce true;
-  systemd.services."autovt@tty1".enable = lib.mkForce false;
+  # systemd.services."autovt@tty7".enable = lib.mkForce true;
+  # systemd.services."getty@tty7".enable = lib.mkForce true;
+  # systemd.services."autovt@tty1".enable = lib.mkForce false;
   # systemd.services."getty@tty1".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;

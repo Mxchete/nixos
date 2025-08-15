@@ -276,6 +276,7 @@ in
     gcc
     gdm-settings
     geekbench
+    ghostty
     git
     gnome-boxes
     gnome-software
