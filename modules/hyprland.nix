@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 {
   nix.settings = {
     substituters = [
@@ -27,7 +27,7 @@
       niri = {
         prettyName = "Niri";
         comment = "Niri compositor managed by UWSM";
-        binPath = "/run/current-system/sw/bin/niri";
+        binPath = "/run/current-system/sw/bin/niri-session";
       };
 
     };
@@ -59,6 +59,7 @@
     jq
     ibm-plex
     material-symbols
+    material-icons
     nerd-fonts.jetbrains-mono
     fd
     fish
@@ -81,4 +82,18 @@
     linux-wallpaperengine
     nwg-look
   ];
+
+  # Here until it warrants its own file
+  services.displayManager.ly = {
+    enable = false;
+    settings = {
+      animate = true;
+      animation = "matrix";
+      bigclock = "en";
+      bigclock_12hr = false;
+      bigclock_seconds = true;
+      clear_password = true;
+      tty = lib.mkForce 7;
+    };
+  };
 }

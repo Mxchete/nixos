@@ -23,7 +23,7 @@
   boot.plymouth = {
     enable = true;
     themePackages = [ pkgs.mikuboot ];
-    theme = "mikuboot";
+    # theme = "mikuboot";
     # theme = "breeze";
     # theme = "rings"; # Consider themes in the future?
   };
@@ -33,7 +33,7 @@
   '';
 
   # Silent Boot
-  boot.consoleLogLevel = 0;
+  boot.consoleLogLevel = 3;
   boot.initrd.verbose = false;
   boot.kernelParams = [
     "quiet"
@@ -43,7 +43,7 @@
     # "console=tty7"
     # "plymouth.nolog"
     "boot.shell_on_fail"
-    "udev.log_priority=0"
+    "udev.log_priority=3"
     "rd.systemd.show_status=auto"
     "systemd.show_status=auto"
     "nvidia_drm.fbdev=1"
@@ -84,21 +84,9 @@
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools
-    # Test
-    libva-utils
-    vdpauinfo
-    egl-wayland
-    eglexternalplatform
-    virtualgl
-    wayland
-    wgpu-utils
     mesa
-    libglvnd
-    # nvtop
-    nvitop
-    libGL
-    glxinfo
-    clinfo
+    virtualgl
+    # Test
     alsa-oss
     alsa-lib
     alsa-utils
@@ -114,6 +102,18 @@
         nvidia-vaapi-driver
         vaapiVdpau
         libvdpau-va-gl
+        libva-utils
+        vdpauinfo
+        egl-wayland
+        eglexternalplatform
+        wayland
+        wgpu-utils
+        libglvnd
+        # nvtop
+        nvitop
+        libGL
+        glxinfo
+        clinfo
       ];
     };
     nvidia = {

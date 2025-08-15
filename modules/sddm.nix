@@ -57,7 +57,7 @@ in
   security.pam.services.sddm-password.enableGnomeKeyring = true;
   systemd.services.disable-wall-messages = {
     description = "Disable systemd wall messages";
-    wantedBy = [ "graphical.target" ];
+    wantedBy = [ "default.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = ''
