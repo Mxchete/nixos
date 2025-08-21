@@ -18,8 +18,8 @@
   };
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
-  boot.blacklistedKernelModules = [ "i915" "amdgpu" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.blacklistedKernelModules = [ "i915" "amdgpu" "nouveau" ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [ "kvm-amd" ];
@@ -28,8 +28,11 @@
   boot.initrd.systemd.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.extraModprobeConfig = ''
+    softdep nvidia pre: vfio vfio_pci
     options snd-hda-intel model=alc4080
+    options snd-usb-audio model=alc4080
     options nvidia NVreg_UsePageAttributeTable=1 NVreg_RegistryDwords=RMUseSwI2c=0x01;RMI2cSpeed=100
+    options nvidia_drm modeset=1
   '';
 
   # Silent Boot
@@ -37,8 +40,9 @@
   boot.initrd.verbose = false;
   boot.kernelParams = [
     "quiet"
-    "loglevel=0"
-    "splash=silent"
+    # "loglevel=0"
+    "splash"
+    # "plymouth.use-simpledrm=0"
     # "console=tty0"
     # "console=tty7"
     # "plymouth.nolog"
@@ -46,8 +50,8 @@
     "udev.log_priority=3"
     "rd.systemd.show_status=auto"
     "systemd.show_status=auto"
-    "nvidia_drm.fbdev=1"
-    "nvidia-drm.modeset=1"
+    # "nvidia_drm.fbdev=1"
+    # "nvidia-drm.modeset=1"
     "rd.udev.log_level=0"
     "vt.global_cursor_default=0"
   ];
@@ -76,7 +80,7 @@
     WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
     VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     # LD_LIBRARY_PATH = LD_LIBRARY_PATH ++ "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
-    GSK_RENDERER = "ngl";
+    # GSK_RENDERER = "ngl";
   };
 
   environment.systemPackages = with pkgs; [

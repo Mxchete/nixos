@@ -24,6 +24,10 @@ let
         pattern = { feature = "procname"; matches = "kwin_wayland"; };
         profile = "Limit Free Buffer Pool On Wayland Compositors";
       }
+      {
+        pattern = { feature = "procname"; matches = "linux-wallpaperengine"; };
+        profile = "Limit Free Buffer Pool On Wayland Compositors";
+      }
     ];
     profiles = [
       {

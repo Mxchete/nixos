@@ -109,13 +109,12 @@ in
 
   # Here until it warrants its own file
   services.displayManager.ly = {
-    enable = true;
+    enable = false;
     settings = {
       animate = true;
       animation = "matrix";
       bigclock = "en";
       bigclock_12hr = false;
-      bigclock_seconds = true;
       clear_password = true;
       tty = lib.mkForce 7;
       x_cmd = lib.mkForce (lib.optionalString config.services.xserver.enable xserverWrapper + " > /dev/null 2>&1");

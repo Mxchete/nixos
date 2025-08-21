@@ -189,6 +189,7 @@
       # windowrule = rounding 0, floating:0, onworkspace:w[tv1]
       # windowrule = bordersize 0, floating:0, onworkspace:f[1]
       # windowrule = rounding 0, floating:0, onworkspace:f[1]
+      windowrule = opacity 0.99999 override, class:zen*
 
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           dwindle {

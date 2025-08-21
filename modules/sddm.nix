@@ -34,6 +34,13 @@ let
 
 in
 {
+  nixpkgs.overlays = [ (final: prev:
+    { sddm-astronaut = prev.sddm-astronaut.overrideAttrs (old: {
+      installPhase = (old.installPhase or "") + ''
+          mkdir -p $out/share/fonts
+          cp -r $src/Fonts/* $out/share/fonts
+        '';
+    }); }) ];
   # systemd.services."getty@tty7.service".wantedBy = [ ];
   # services.getty.enable = false;
   # systemd.units."getty@tty1.service" = {
@@ -48,6 +55,7 @@ in
   # systemd.services."getty@tty7".enable = lib.mkForce true;
   # systemd.services."autovt@tty1".enable = lib.mkForce false;
   # systemd.services."getty@tty1".enable = lib.mkForce false;
+  systemd.services."getty@tty7".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -73,9 +81,9 @@ in
 
   services.displayManager.sddm = {
     # package = lib.mkForce sddmVT1;
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     enableHidpi = true;
-    theme = "breeze";
+    theme = "sddm-astronaut-theme";
     wayland.enable = true;
     wayland.compositor = "kwin";
     settings = {
@@ -84,10 +92,11 @@ in
     # settings.General.DisplayServer = "x11-user";
   };
   environment.systemPackages = with pkgs; [
-    (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-      [General]
-      background = "${background-package}"
-    '')
+    (sddm-astronaut.override { embeddedTheme = "hyprland_kath"; })
+    # (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+    #   [General]
+    #   background = "${background-package}"
+    # '')
   ];
 
 }
