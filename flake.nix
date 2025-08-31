@@ -43,10 +43,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mikuboot = {
-      url = "gitlab:evysgarden/mikuboot";
-      inputs.nixpkgs.follows = ""; # only useful for the package output
-    };
+    # mikuboot = {
+    #   url = "gitlab:evysgarden/mikuboot";
+    #   inputs.nixpkgs.follows = ""; # only useful for the package output
+    # };
     # niri = {
     #   url = "github:sodiboo/niri-flake";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -60,7 +60,7 @@
     , home-manager
     , nur
       # , ghostty
-    , mikuboot
+    # , mikuboot
       # , hyprland
       # , niri
     , ...
@@ -79,7 +79,7 @@
                 # ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
               ];
             })
-            mikuboot.nixosModules.default
+            # mikuboot.nixosModules.default
             chaotic.nixosModules.default
             nur.modules.nixos.default
             lanzaboote.nixosModules.lanzaboote

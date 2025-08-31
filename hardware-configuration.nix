@@ -17,12 +17,39 @@
     # theme = "rings"; # Consider themes in the future?
   };
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-  boot.blacklistedKernelModules = [ "i915" "amdgpu" "nouveau" ];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "thunderbolt"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [
+    "dm-snapshot"
+    "cryptd"
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
+  boot.blacklistedKernelModules = [
+    "i915"
+    "amdgpu"
+    "nouveau"
+    "iTCO_wdt"
+    "nvidiafb"
+    "rivafb"
+    "rivatv"
+    "vga16fb"
+  ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.latest ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm-amd"
+  ];
   # boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   boot.loader.systemd-boot.consoleMode = "max";
   boot.initrd.systemd.enable = true;
@@ -50,9 +77,11 @@
     "udev.log_priority=3"
     "rd.systemd.show_status=auto"
     "systemd.show_status=auto"
-    # "nvidia_drm.fbdev=1"
-    # "nvidia-drm.modeset=1"
+    "nvidia.modeset=1"
+    "nvidia_drm.modeset=1"
+    "nvidia_drm.fbdev=1"
     "rd.udev.log_level=0"
+    "rd.driver.blacklist=nouveau"
     "vt.global_cursor_default=0"
   ];
   boot.loader.timeout = 0;
@@ -79,8 +108,10 @@
     CLUTTER_BACKEND = "wayland";
     WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
     VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    # __GL_SHADER_DISK_CACHE="1";
+    # __GL_SHADER_DISK_CACHE_PATH="/tmp";
+    # __GL_SYNC_TO_VBLANK="1";
     # LD_LIBRARY_PATH = LD_LIBRARY_PATH ++ "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
-    # GSK_RENDERER = "ngl";
   };
 
   environment.systemPackages = with pkgs; [
@@ -125,19 +156,10 @@
       modesetting.enable = true;
       powerManagement.enable = true;
       forceFullCompositionPipeline = true;
-      nvidiaPersistenced = true;
+      # nvidiaPersistenced = true;
       # powerManagement.finegrained = true;
       open = true;
-      # package = config.boot.kernelPackages.nvidiaPackages.latest;
-      # TODO: Figure out how to update drivers without breaking plymouth
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "575.64.05";
-        sha256_64bit = "sha256-hfK1D5EiYcGRegss9+H5dDr/0Aj9wPIJ9NVWP3dNUC0=";
-        sha256_aarch64 = "sha256-GRE9VEEosbY7TL4HPFoyo0Ac5jgBHsZg9sBKJ4BLhsA=";
-        openSha256 = "sha256-mcbMVEyRxNyRrohgwWNylu45vIqF+flKHnmt47R//KU=";
-        settingsSha256 = "sha256-o2zUnYFUQjHOcCrB0w/4L6xI1hVUXLAWgG2Y26BowBE=";
-        persistencedSha256 = "sha256-2g5z7Pu8u2EiAh5givP5Q1Y4zk4Cbb06W37rf768NFU=";
-      };
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       nvidiaSettings = true;
       # prime = {
       #   offload = {

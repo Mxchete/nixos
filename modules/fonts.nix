@@ -1,6 +1,15 @@
 # modules/fonts.nix
 { pkgs, ... }:
 {
+  nixpkgs.overlays = [ (final: prev:
+    { sddm-astronaut-fonts = prev.sddm-astronaut.overrideAttrs (old: {
+      installPhase = 
+        ''
+          mkdir -p $out/share/fonts
+          cp -r $src/Fonts/* $out/share/fonts
+        '';
+    }); }) ];
+
   fonts = {
     fontconfig = {
       enable = true;
@@ -15,6 +24,7 @@
       nerd-fonts.caskaydia-mono
       corefonts
       vistafonts
+      sddm-astronaut-fonts
     ];
   };
 }

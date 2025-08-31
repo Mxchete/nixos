@@ -85,16 +85,16 @@ in
   # services.xserver.enable = true;
 
 
-  environment.sessionVariables.ALSA_CONFIG_UCM2 =
-    let
-      alsa-ucm-conf = pkgs.fetchFromGitHub {
-        owner = "alsa-project";
-        repo = "alsa-ucm-conf";
-        rev = "v1.2.14";
-        sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";
-      };
-    in
-    "${alsa-ucm-conf}/ucm2";
+  # environment.sessionVariables.ALSA_CONFIG_UCM2 =
+  #   let
+  #     alsa-ucm-conf = pkgs.fetchFromGitHub {
+  #       owner = "alsa-project";
+  #       repo = "alsa-ucm-conf";
+  #       rev = "v1.2.14";
+  #       sha256 = "sha256-U/gMam8veX3nrmP3X8EdWGQjC5AbcxadTelUXwIVhFA=";
+  #     };
+  #   in
+  #   "${alsa-ucm-conf}/ucm2";
 
   # NVIDIA VRAM leak workaround, see comment at top.
   environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json".text =
@@ -274,6 +274,7 @@ in
     discord
     distrobox
     fastfetch
+    ffmpeg
     firefox
     flatpak
     fzf

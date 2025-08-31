@@ -34,13 +34,6 @@ let
 
 in
 {
-  nixpkgs.overlays = [ (final: prev:
-    { sddm-astronaut = prev.sddm-astronaut.overrideAttrs (old: {
-      installPhase = (old.installPhase or "") + ''
-          mkdir -p $out/share/fonts
-          cp -r $src/Fonts/* $out/share/fonts
-        '';
-    }); }) ];
   # systemd.services."getty@tty7.service".wantedBy = [ ];
   # services.getty.enable = false;
   # systemd.units."getty@tty1.service" = {
@@ -92,7 +85,7 @@ in
     # settings.General.DisplayServer = "x11-user";
   };
   environment.systemPackages = with pkgs; [
-    (sddm-astronaut.override { embeddedTheme = "hyprland_kath"; })
+    (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
     # (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
     #   [General]
     #   background = "${background-package}"
