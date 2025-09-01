@@ -51,6 +51,7 @@
     #   url = "github:sodiboo/niri-flake";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    nix-colors.url = "github:misterio77/nix-colors";
   };
   outputs =
     { self
@@ -58,6 +59,7 @@
     , chaotic
     , lanzaboote
     , home-manager
+    , nix-colors
     , nur
       # , ghostty
     # , mikuboot

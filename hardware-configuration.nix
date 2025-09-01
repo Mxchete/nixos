@@ -227,4 +227,5 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   nix.settings.max-jobs = 16;
+  nix.settings.cores = 16;
 }

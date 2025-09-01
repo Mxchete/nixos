@@ -1,16 +1,17 @@
-inputs: {
+{
   config,
   pkgs,
+  inputs,
   ...
 }: let
-  palette = config.colorScheme.palette;
+  palette = inputs.nix-colors.colorSchemes.${"kanagawa"}.palette;
   convert = inputs.nix-colors.lib.conversions.hexToRGBString;
   backgroundRgb = "rgb(${convert ", " palette.base00})";
   foregroundRgb = "rgb(${convert ", " palette.base05})";
 in {
   home.file = {
     ".config/waybar/" = {
-      source = ../../config/waybar;
+      source = ../waybar;
       recursive = true;
     };
     ".config/waybar/theme.css" = {
