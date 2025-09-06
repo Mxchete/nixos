@@ -17,6 +17,7 @@
     # theme = "rings"; # Consider themes in the future?
   };
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
