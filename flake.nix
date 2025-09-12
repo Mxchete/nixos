@@ -52,6 +52,10 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     nix-colors.url = "github:misterio77/nix-colors";
+    silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self

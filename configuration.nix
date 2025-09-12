@@ -221,10 +221,10 @@ in
   #   dates = "daily";
   # };
 
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
   virtualisation.libvirtd.enable = true;
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -253,6 +253,8 @@ in
     gamescopeSession.enable = true;
     extraCompatPackages = with pkgs; [
       steamtinkerlaunch
+      proton-ge-bin
+      protonup-qt
     ];
   };
   programs.gamemode.enable = true;
@@ -343,6 +345,50 @@ in
   services.hardware.openrgb.enable = true;
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
+  services.snapper = {
+    snapshotInterval = "hourly";  # used with `OnCalendar`, so must be interval
+    cleanupInterval = "3h";  # used with `OnUnitActiveSec`, so must be duration
+    
+    /*
+    I have all relevant mutable stuff consolidated on the persist subvolume, everything else is
+    (hopefully) reproducibly in the Nix store or ephemeral. Of that mutable state I create a
+    snapshot timeline so I can revert accidents and look at previous states.
+
+    See: http://snapper.io/manpages/snapper-configs.html
+    */
+    configs.home = {
+      /*
+      snapper assumes that there is a nested subvolume at `.snapshots` in the subvolume to be
+      snapshotted, so in this case at `/home/.snapshots`.
+      */
+      SUBVOLUME = "/home";
+      FSTYPE = "btrfs";
+      ALLOW_USERS = [ ];  # I want only root, which is implicit
+
+      /*
+      When there's a snapper config, NixOS enables a systemd timer unit that regularly calls snapper to create
+      a timeline snapshot or run a cleanup, following the intervals from above.
+      */
+      TIMELINE_CREATE = true;  # create timeline snapshots for this config
+      TIMELINE_CLEANUP = true;  # run timeline snapshot cleanup for this config
+
+      /*
+      The amount of snapshots to keep per interval.
+
+      For any given hour, day and so on the first snapshot is kept. That is done for the last n
+      hours, days and so on, as configured. All other snapshots will be pruned when the cleanup
+      runs. Weeks start on Monday.
+
+      So e.g. if 2 daily snapshots were configured, the first snapshot from today and yesterday
+      would be kept.
+      */
+      TIMELINE_LIMIT_HOURLY = "12";
+      TIMELINE_LIMIT_DAILY = "7";
+      TIMELINE_LIMIT_WEEKLY = "0";
+      TIMELINE_LIMIT_MONTHLY = "0";
+      TIMELINE_LIMIT_YEARLY = "0";
+    };
+  };
   # services.smartd.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are

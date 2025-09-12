@@ -1,53 +1,36 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   background-package = pkgs.stdenvNoCC.mkDerivation {
-    name = "background-image";
-    src = ./wallpaper.png;
+    name = "background-images";
+    src = ./sddm_background;
     dontUnpack = true;
     installPhase = ''
-      cp $src $out
+      mkdir -p $out/share/backgrounds
+      cp $src/* $out/share/backgrounds/
     '';
   };
-  # sddmVT1 = pkgs.kdePackages.sddm.overrideDerivation (prev: {
-  #   cmakeFlags = (prev.cmakeFlags) ++ [
-  #     "-DSDDM_INITIAL_VT=1"
-  #   ];
-  # });
-  #
-  # systemd = {
-  #   tmpfiles.packages = [ sddmVT1 ];
-  #
-  #   # We're not using the upstream unit, so copy these: https://github.com/sddm/sddm/blob/develop/services/sddm.service.in
-  #   services.display-manager = {
-  #     after = [
-  #       "systemd-user-sessions.service"
-  #       "getty@tty1.service"
-  #       "plymouth-quit.service"
-  #       "systemd-logind.service"
-  #     ];
-  #     conflicts = [
-  #       "getty@tty1.service"
-  #     ];
-  #   };
-  # };
-
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+    theme = "default"; # select the config of your choice
+    theme-overrides = {
+      "General" = {
+        animated-background-placeholder = "${background-package}/share/backgrounds/jake_the_dog.png";
+      };
+      "LoginScreen" = {
+        background = "${background-package}/share/backgrounds/jake_the_dog.mp4";
+      };
+    };
+  };
 in
 {
-  # systemd.services."getty@tty7.service".wantedBy = [ ];
-  # services.getty.enable = false;
-  # systemd.units."getty@tty1.service" = {
-  #   overrideStrategy = "asDropin";
-  #   text = ''
-  #     [Service]
-  #     ExecStart=
-  #     ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --noclear %I $TERM
-  #   '';
-  # };
-  # systemd.services."autovt@tty7".enable = lib.mkForce true;
-  # systemd.services."getty@tty7".enable = lib.mkForce true;
-  # systemd.services."autovt@tty1".enable = lib.mkForce false;
-  # systemd.services."getty@tty1".enable = lib.mkForce false;
+  # From https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
+  environment.systemPackages = [
+    sddm-theme
+    sddm-theme.test
+    (pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
+  ];
+  qt.enable = true;
+
   systemd.services."getty@tty7".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;
@@ -73,23 +56,21 @@ in
   };
 
   services.displayManager.sddm = {
-    # package = lib.mkForce sddmVT1;
+    package = lib.mkDefault pkgs.kdePackages.sddm;
     enable = lib.mkDefault true;
     enableHidpi = true;
-    theme = "sddm-astronaut-theme";
+    # Theme & extraPackages & settings General from
+    # https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
+    theme = sddm-theme.pname;
+    extraPackages = sddm-theme.propagatedBuildInputs;
     wayland.enable = true;
     wayland.compositor = "kwin";
     settings = {
       Theme.CursorTheme = "Adwaita";
+      General = {
+        GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+        InputMethod = "qtvirtualkeyboard";
+      };
     };
-    # settings.General.DisplayServer = "x11-user";
   };
-  environment.systemPackages = with pkgs; [
-    (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
-    # (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-    #   [General]
-    #   background = "${background-package}"
-    # '')
-  ];
-
 }

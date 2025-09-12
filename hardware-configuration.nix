@@ -9,12 +9,32 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      plymouth = prev.plymouth.overrideAttrs ({ src, ... }: {
+        version = "24.004.60-unstable-2024-08-28";
+
+        src = src.override {
+          rev = "ea83580a6d66afd2b37877fc75248834fe530d99";
+          hash = "sha256-GQzf756Y26aCXPyZL9r+UW7uo+wu8IXNgMeJkgFGWnA=";
+        };
+      });
+    })
+  ];
+
   boot.plymouth = {
     enable = true;
     # themePackages = [ pkgs.mikuboot ];
+    themePackages = with pkgs; [ 
+      # plymouth-matrix-theme
+      plymouth-blahaj-theme
+      nixos-bgrt-plymouth
+    ];
+    theme = "nixos-bgrt";
     # theme = "mikuboot";
     # theme = "breeze";
     # theme = "rings"; # Consider themes in the future?
+    # extraConfig = "DeviceTimeout=10";
   };
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -67,6 +87,8 @@
   boot.consoleLogLevel = 3;
   boot.initrd.verbose = false;
   boot.kernelParams = [
+    "nvidia_drm.modeset=1"
+    "nvidia_drm.fbdev=1"
     "quiet"
     # "loglevel=0"
     "splash"
@@ -79,8 +101,6 @@
     "rd.systemd.show_status=auto"
     "systemd.show_status=auto"
     "nvidia.modeset=1"
-    "nvidia_drm.modeset=1"
-    "nvidia_drm.fbdev=1"
     "rd.udev.log_level=0"
     "rd.driver.blacklist=nouveau"
     "vt.global_cursor_default=0"
