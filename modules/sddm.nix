@@ -10,17 +10,30 @@ let
       cp $src/* $out/share/backgrounds/
     '';
   };
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+  sddm-theme = (inputs.silentSDDM.packages.${pkgs.system}.default.override {
     theme = "default"; # select the config of your choice
     theme-overrides = {
-      "General" = {
-        animated-background-placeholder = "${background-package}/share/backgrounds/jake_the_dog.png";
+      # "General" = {
+      #   animated-background-placeholder = "jake_the_dog.png";
+      # };
+      # "LoginScreen" = {
+      #   background = "jake_the_dog.mp4";
+      # };
+      "LockScreen" = {
+        background = "frieren_live_uw.mp4";
+        blur = "0";
       };
       "LoginScreen" = {
-        background = "${background-package}/share/backgrounds/jake_the_dog.mp4";
+        background = "frieren_live_uw.mp4";
+        blur = "30";
       };
     };
-  };
+  }).overrideAttrs (old: {
+    installPhase = old.installPhase + ''
+      mkdir -p $out/share/sddm/themes/silent/backgrounds/
+      cp -r ${background-package}/share/backgrounds/* $out/share/sddm/themes/silent/backgrounds/
+    '';
+  });
 in
 {
   # From https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake

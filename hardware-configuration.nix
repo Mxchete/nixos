@@ -177,6 +177,7 @@
       modesetting.enable = true;
       powerManagement.enable = true;
       forceFullCompositionPipeline = true;
+      # TODO: Persistenced still broken
       # nvidiaPersistenced = true;
       # powerManagement.finegrained = true;
       open = true;

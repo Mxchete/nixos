@@ -10,8 +10,9 @@
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      pkgs.hyprlandPlugins.hyprexpo
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      # TODO: check when fixed
+      # pkgs.hyprlandPlugins.hyprexpo
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
       (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
         # hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       })

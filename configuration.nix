@@ -25,6 +25,14 @@ let
         profile = "Limit Free Buffer Pool On Wayland Compositors";
       }
       {
+        pattern = { feature = "procname"; matches = ".kwin_wayland-wrapped"; };
+        profile = "Limit Free Buffer Pool On Wayland Compositors";
+      }
+      {
+        pattern = { feature = "procname"; matches = ".plasmashell-wrapped"; };
+        profile = "Limit Free Buffer Pool On Wayland Compositors";
+      }
+      {
         pattern = { feature = "procname"; matches = "linux-wallpaperengine"; };
         profile = "Limit Free Buffer Pool On Wayland Compositors";
       }
