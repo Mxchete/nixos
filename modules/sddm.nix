@@ -20,12 +20,16 @@ let
       #   background = "jake_the_dog.mp4";
       # };
       "LockScreen" = {
-        background = "frieren_live_uw.mp4";
+        # background = "frieren_live_uw_reencode.mp4";
+        background = "wallpaper.png";
         blur = "0";
+        brightness = "-0.15";
       };
       "LoginScreen" = {
-        background = "frieren_live_uw.mp4";
+        # background = "frieren_live_uw_reencode.mp4";
+        background = "wallpaper.png";
         blur = "30";
+        brightness = "-0.25";
       };
     };
   }).overrideAttrs (old: {

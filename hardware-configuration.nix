@@ -36,7 +36,7 @@
     # theme = "rings"; # Consider themes in the future?
     # extraConfig = "DeviceTimeout=10";
   };
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos.cachyOverride { mArch = "ZEN4"; };
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"

@@ -7,6 +7,7 @@
     ./modules/hypr/hyprlock
     ./modules/bar/waybar
     ./modules/wofi
+    ./modules/programs/neovim
     # ./modules/hypr/hyprpanel
   ];
   wayland.windowManager.hyprland = { };
