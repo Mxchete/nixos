@@ -307,7 +307,7 @@ in
     libimobiledevice
     libnotify
     libreoffice
-    limo
+    limo # TODO: 9/19 fails to build dep rn 
     localsend
     # minecraft # Currently Broken ???
     mangohud

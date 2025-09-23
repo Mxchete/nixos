@@ -6,15 +6,16 @@
       enable = false;
       variables = [ "--all" ];
     };
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # TODO: 9/19 - plugins
     plugins = [
-      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      # TODO: check when fixed
+      #   # TODO: check when fixed
       # pkgs.hyprlandPlugins.hyprexpo
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
       (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
-        # hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       })
     ];
     extraConfig = ''

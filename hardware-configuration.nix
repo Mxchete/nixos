@@ -100,10 +100,11 @@
     "udev.log_priority=3"
     "rd.systemd.show_status=auto"
     "systemd.show_status=auto"
-    "nvidia.modeset=1"
+    # "nvidia.modeset=1"
     "rd.udev.log_level=0"
     "rd.driver.blacklist=nouveau"
     "vt.global_cursor_default=0"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
   boot.loader.timeout = 0;
   console = {

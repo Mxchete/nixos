@@ -39,8 +39,8 @@ in
     ];
   };
   xdg.portal.enable = true;
-  # xdg.portal.extraPortals = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk pkgs. xdg-desktop-portal-gnome ];
+  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   programs.uwsm = {
     enable = true;
     waylandCompositors = {
@@ -61,10 +61,10 @@ in
     enable = true;
     withUWSM = true;
     # set the flake package
-    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # make sure to also set the portal package, so that they are in sync
-    # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    # portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

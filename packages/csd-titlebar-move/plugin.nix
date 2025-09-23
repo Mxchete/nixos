@@ -5,7 +5,7 @@
 , hyprlandPlugins
 ,
 }:
-hyprlandPlugins.mkHyprlandPlugin hyprland {
+hyprlandPlugins.mkHyprlandPlugin {
   pluginName = "csd-titlebar-move";
   version = "0.39.1";
 
