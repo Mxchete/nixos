@@ -53,6 +53,7 @@
     kdePackages.qtmultimedia
     kdePackages.kzones
     kdePackages.krfb
+    kdePackages.layer-shell-qt
     kdePackages.qtwebsockets
     kdePackages.qt5compat
     kdePackages.qtpositioning

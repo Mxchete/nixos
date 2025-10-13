@@ -1,5 +1,11 @@
 { config, lib, pkgs, inputs, ... }:
 {
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     hyprspace = prev.
+  #   })
+  # ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd = {
@@ -7,13 +13,19 @@
       variables = [ "--all" ];
     };
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    # TODO: 9/19 - plugins
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      #   # TODO: check when fixed
-      # pkgs.hyprlandPlugins.hyprexpo
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
+      inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
+      # TODO: Override hyprspace package with github patch
+      # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace.overrideAttrs (oldAttrs: {
+      #   patches = (oldAttrs.patches or []) ++ [
+      #     (builtins.fetchurl {
+      #       url = "https://patch-diff.githubusercontent.com/raw/KZDKM/Hyprspace/pull/200.patch";
+      #       sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      #     })
+      #   ];
+      # })
       (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
         hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       })
@@ -236,9 +248,9 @@
           }
 
       # https://wiki.hyprland.org/Configuring/Variables/#gestures
-          gestures {
-              workspace_swipe = false
-          }
+          # gestures {
+          #     workspace_swipe = false
+          # }
 
 
       ###################

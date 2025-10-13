@@ -107,6 +107,7 @@ in
     imagemagick
     linux-wallpaperengine
     nwg-look
+    mpvpaper
   ];
 
   # Here until it warrants its own file

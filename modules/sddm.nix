@@ -23,13 +23,13 @@ let
         # background = "frieren_live_uw_reencode.mp4";
         background = "wallpaper.png";
         blur = "0";
-        brightness = "-0.15";
+        # brightness = "-0.15";
       };
       "LoginScreen" = {
         # background = "frieren_live_uw_reencode.mp4";
         background = "wallpaper.png";
         blur = "30";
-        brightness = "-0.25";
+        brightness = "-0.1";
       };
     };
   }).overrideAttrs (old: {
@@ -43,12 +43,34 @@ in
   # From https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
   environment.systemPackages = [
     sddm-theme
-    sddm-theme.test
+    pkgs.xsettingsd
+    # sddm-theme.test
     (pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
+
+    # Adds a package defining a default icon/cursor theme.
+    # Based off of: https://github.com/NixOS/nixpkgs/pull/25974#issuecomment-305997110
+    (pkgs.callPackage ({ stdenv }: stdenv.mkDerivation {
+      name = "global-cursor-theme";
+      unpackPhase = "true";
+      outputs = [ "out" ];
+      installPhase = ''
+        mkdir -p $out/share/icons/default
+        cat << EOF > $out/share/icons/default/index.theme
+        [Icon Theme]
+        Name=Default
+        Comment=Default Cursor Theme
+        Inherits=Adwaita
+        Size=24
+        EOF
+      '';
+    }) {})
   ];
   qt.enable = true;
 
-  systemd.services."getty@tty7".enable = lib.mkForce false;
+  systemd.services."getty@tty7".enable = lib.mkForce true;
+  systemd.services."autovt@tty1".enable = lib.mkForce false;
+  systemd.services."getty@tty1".enable = lib.mkForce false;
+  # systemd.services."getty@tty7".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -84,10 +106,18 @@ in
     wayland.compositor = "kwin";
     settings = {
       Theme.CursorTheme = "Adwaita";
+      Theme.CursorSize = "24";
+      X11.ServerArguments="-terminate -logfile /dev/null";
       General = {
-        GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+        # GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard,QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
         InputMethod = "qtvirtualkeyboard";
+        HaltCommand = "/run/current-system/systemd/bin/systemctl poweroff --no-wall";
+        RebootCommand = "/run/current-system/systemd/bin/systemctl reboot --no-wall";
       };
+      # Wayland = {
+      #   CompositorCommand =  "${pkgs.kdePackages.kwin}/bin/kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1";
+      # };
     };
   };
 }

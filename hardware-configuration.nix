@@ -30,13 +30,13 @@
       plymouth-blahaj-theme
       nixos-bgrt-plymouth
     ];
-    theme = "nixos-bgrt";
+    # theme = "nixos-bgrt";
     # theme = "mikuboot";
     # theme = "breeze";
     # theme = "rings"; # Consider themes in the future?
     # extraConfig = "DeviceTimeout=10";
   };
-  boot.kernelPackages = pkgs.linuxPackages_cachyos.cachyOverride { mArch = "ZEN4"; };
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-gcc.cachyOverride { mArch = "ZEN4"; };
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -118,6 +118,7 @@
 
   environment.variables = {
     GBM_BACKEND = "nvidia-drm";
+    NVD_BACKEND = "direct";
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
@@ -179,7 +180,7 @@
       powerManagement.enable = true;
       forceFullCompositionPipeline = true;
       # TODO: Persistenced still broken
-      # nvidiaPersistenced = true;
+      nvidiaPersistenced = true;
       # powerManagement.finegrained = true;
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.latest;

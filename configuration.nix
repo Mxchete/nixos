@@ -36,6 +36,10 @@ let
         pattern = { feature = "procname"; matches = "linux-wallpaperengine"; };
         profile = "Limit Free Buffer Pool On Wayland Compositors";
       }
+      {
+        pattern = { feature = "procname"; matches = ".mpvpaper-wrapped"; };
+        profile = "Limit Free Buffer Pool On Wayland Compositors";
+      }
     ];
     profiles = [
       {
@@ -206,29 +210,6 @@ in
 
   nix.settings.auto-optimise-store = true;
 
-  # TODO: Try this
-  #
-  # programs.nh = {
-  #   enable = true;
-  #
-  #   clean = {
-  #     enable = true;
-  #     extraArgs = "--keep 7";
-  #   };
-  # };
-
-  # system.autoUpgrade = {
-  #   enable = true;
-  #   flake = inputs.self.outPath;
-  # flags = [
-  #   "--update-input"
-  #   "nixpkgs"
-  #   # "--no-write-lock-file"
-  #   "-L" # print build logs
-  # ];
-  #   dates = "daily";
-  # };
-
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   virtualisation.libvirtd.enable = true;
@@ -278,6 +259,7 @@ in
     ani-cli
     better-control
     bitwarden-desktop
+    btop
     cargo
     celluloid
     dconf
@@ -299,6 +281,7 @@ in
     google-chrome
     goverlay
     heroic
+    htop
     ifuse
     kando
     kdePackages.isoimagewriter
@@ -317,12 +300,15 @@ in
     nexusmods-app-unfree
     oneko
     openloco
-    openrct2
+    # openrct2
     openrgb-with-all-plugins
     oreo-cursors-plus
     pavucontrol
     pay-respects
     pciutils
+    podman-compose
+    podman-tui
+    poppler-utils
     prismlauncher
     python313
     qemu
@@ -334,6 +320,7 @@ in
     stow
     timeshift
     tmux
+    tree
     usbutils
     vim-full
     vscode
@@ -416,6 +403,7 @@ in
   # networking.firewall.allowedTCPPorts = [ ... ];
   # Enable this for testing ESP32
   # networking.firewall.allowedTCPPorts = [ 3000 ];
+  # networking.firewall.allowedTCPPorts = [ 4000 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
