@@ -16,16 +16,7 @@
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
-      # TODO: Override hyprspace package with github patch
-      # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace.overrideAttrs (oldAttrs: {
-      #   patches = (oldAttrs.patches or []) ++ [
-      #     (builtins.fetchurl {
-      #       url = "https://patch-diff.githubusercontent.com/raw/KZDKM/Hyprspace/pull/200.patch";
-      #       sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-      #     })
-      #   ];
-      # })
+      # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
       (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
         hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       })

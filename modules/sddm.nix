@@ -67,9 +67,35 @@ in
   ];
   qt.enable = true;
 
-  systemd.services."getty@tty7".enable = lib.mkForce true;
-  systemd.services."autovt@tty1".enable = lib.mkForce false;
-  systemd.services."getty@tty1".enable = lib.mkForce false;
+  # systemd.services."display-manager" = {
+  #   conflicts = [ "plymouth-quit.service" ];
+  #   preStart = "${pkgs.plymouth}/bin/plymouth deactivate";
+  #   script = "/run/current-system/sw/bin/sddm";
+  #   startLimitBurst = lib.mkForce 10;
+  #   startLimitIntervalSec = lib.mkForce 5;
+  #   postStart = "/bin/sh -c 'sleep 5 && ${pkgs.plymouth}/bin/plymouth quit --retain-splash'";
+  #   restartIfChanged = false;
+  #   enable = true;
+  # };
+  systemd.services."plymouth-quit-retainer" = {
+    after = [ "plymouth-quit.service"];
+    conflicts = [ "plymouth-quit.service"];
+    serviceConfig = {
+      ExecStartPre = "${pkgs.plymouth}/bin/plymouth deactivate";
+      ExecStartPost = "${pkgs.plymouth}/bin/plymouth quit --retain-splash";
+    };
+  };
+
+  # environment.etc."plymouth/plymouthd.conf".text = lib.mkForce ''
+  #   [Daemon]
+  #   Theme=bgrt
+  #   DeviceTimeout=10
+  #   ShowDelay=0
+  # '';
+
+  # systemd.services."getty@tty7".enable = lib.mkForce false;
+  # systemd.services."autovt@tty1".enable = lib.mkForce false;
+  # systemd.services."getty@tty1".enable = lib.mkForce false;
   # systemd.services."getty@tty7".enable = lib.mkForce false;
   services.xserver.enable = true;
   services.gnome.gnome-keyring.enable = true;
@@ -94,30 +120,32 @@ in
     };
   };
 
-  services.displayManager.sddm = {
-    package = lib.mkDefault pkgs.kdePackages.sddm;
-    enable = lib.mkDefault true;
-    enableHidpi = true;
-    # Theme & extraPackages & settings General from
-    # https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
-    theme = sddm-theme.pname;
-    extraPackages = sddm-theme.propagatedBuildInputs;
-    wayland.enable = true;
-    wayland.compositor = "kwin";
-    settings = {
-      Theme.CursorTheme = "Adwaita";
-      Theme.CursorSize = "24";
-      X11.ServerArguments="-terminate -logfile /dev/null";
-      General = {
-        # GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard,QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
-        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
-        InputMethod = "qtvirtualkeyboard";
-        HaltCommand = "/run/current-system/systemd/bin/systemctl poweroff --no-wall";
-        RebootCommand = "/run/current-system/systemd/bin/systemctl reboot --no-wall";
+  services.displayManager = {
+    sddm = {
+      package = lib.mkDefault pkgs.kdePackages.sddm;
+      enable = lib.mkDefault true;
+      enableHidpi = true;
+      # Theme & extraPackages & settings General from
+      # https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
+      theme = sddm-theme.pname;
+      extraPackages = sddm-theme.propagatedBuildInputs;
+      wayland.enable = true;
+      wayland.compositor = "kwin";
+      settings = {
+        Theme.CursorTheme = "Adwaita";
+        Theme.CursorSize = "24";
+        X11.ServerArguments="-terminate -logfile /dev/null";
+        General = {
+          # GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard,QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+          GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+          InputMethod = "qtvirtualkeyboard";
+          HaltCommand = "/run/current-system/systemd/bin/systemctl poweroff --no-wall";
+          RebootCommand = "/run/current-system/systemd/bin/systemctl reboot --no-wall";
+        };
+        # Wayland = {
+        #   CompositorCommand =  "${pkgs.kdePackages.kwin}/bin/kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1";
+        # };
       };
-      # Wayland = {
-      #   CompositorCommand =  "${pkgs.kdePackages.kwin}/bin/kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1";
-      # };
     };
   };
 }

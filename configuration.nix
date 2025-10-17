@@ -257,6 +257,7 @@ in
     inputs.quickshell.packages.${system}.default
     adw-gtk3
     ani-cli
+    arrpc
     better-control
     bitwarden-desktop
     btop
