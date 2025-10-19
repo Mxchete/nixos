@@ -29,10 +29,12 @@ in
     enable = true;
     dates = "daily";
     persistent = true;
+    operation = "boot";
     flake = inputs.self.outPath;
     flags = [
       "--update-input"
       "nixpkgs"
+      "--recreate-lock-file"
     ];
   };
   # systemd.services.nixos-upgrade = {
