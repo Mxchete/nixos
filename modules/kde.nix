@@ -10,7 +10,15 @@
           inherit (final.kdePackages) signon-plugin-oauth2;
         };
         signon-ui = final.kdePackages.callPackage ../packages/signon-ui { };
+        wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
+          version = "0.5.4-unstable-2025-06-29-dirty";
+          patches = (old.patches or []) ++ [ ./kde-patches/cmake_update.patch ];
+        });
       };
+      # kdePackages.wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs ({ patches, ... }: {
+      #   version = "0.5.4-unstable-2025-06-29-dirty";
+      #   patches = (old.patches or []) ++ [ ./kde-patches/cmake_update.patch ];
+      # });
     })
   ];
   # services.displayManager.gdm.enable = lib.mkForce false;
@@ -35,7 +43,8 @@
   # services.desktopManager.plasma6.enable = true;
   # programs.ssh.askPassword = lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   environment.systemPackages = with pkgs; [
-    kde-rounded-corners
+    kdePackages.qtbase
+    # kde-rounded-corners
     kdePackages.wallpaper-engine-plugin
     kdePackages.sddm-kcm
     kdePackages.accounts-qt
@@ -63,12 +72,12 @@
     darkly
     nur.repos.shadowrz.klassy-qt6
     inputs.kwin-effects-forceblur.packages.${pkgs.system}.default
-    (kdePackages.signond.override {
-      withOAuth2 = true;
-      withKWallet = true;
-    })
-    kdePackages.signon-plugin-oauth2
-    kdePackages.signon-ui
+    # (kdePackages.signond.override {
+    #   withOAuth2 = true;
+    #   withKWallet = true;
+    # })
+    # kdePackages.signon-plugin-oauth2
+    # kdePackages.signon-ui
   ];
   # environment.plasma6.excludePackages = with pkgs.kdePackages; [
   #   # kdeconnect

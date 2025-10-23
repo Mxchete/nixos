@@ -27,15 +27,15 @@ in
   nix.settings = {
     substituters = [
       "https://hyprland.cachix.org"
-      "https://ghostty.cachix.org"
+      # "https://ghostty.cachix.org"
     ];
     trusted-substituters = [
       "https://hyprland.cachix.org"
-      "https://ghostty.cachix.org"
+      # "https://ghostty.cachix.org"
     ];
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+      # "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
     ];
   };
   xdg.portal.enable = true;
@@ -79,7 +79,7 @@ in
     hypridle
     hyprland-qtutils
     hyprland-qt-support
-    hyprsysteminfo
+    # hyprsysteminfo
     ags
     wofi
     jq

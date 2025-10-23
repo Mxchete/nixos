@@ -37,6 +37,9 @@
     # extraConfig = "DeviceTimeout=10";
   };
   boot.kernelPackages = pkgs.linuxPackages_cachyos-gcc.cachyOverride { mArch = "ZEN4"; };
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+  };
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -105,6 +108,10 @@
     "rd.driver.blacklist=nouveau"
     "vt.global_cursor_default=0"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "zswap.enabled=1" # enables zswap
+    "zswap.compressor=lz4" # compression algorithm
+    "zswap.max_pool_percent=20" # maximum percentage of RAM that zswap is allowed to use
+    "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
   ];
   boot.loader.timeout = 0;
   console = {
@@ -222,6 +229,7 @@
   swapDevices = [{
     device = "/swap/swapfile";
     size = 16 * 1024; # 16GB
+    options = [ "discard" ];
   }];
 
   services.btrfs.autoScrub = {

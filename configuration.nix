@@ -244,6 +244,7 @@ in
       steamtinkerlaunch
       proton-ge-bin
       protonup-qt
+      proton-cachyos_x86_64_v4
     ];
   };
   programs.gamemode.enable = true;
@@ -324,6 +325,7 @@ in
     tree
     usbutils
     vim-full
+    vlc
     vscode
     vscode.fhs
     wget
