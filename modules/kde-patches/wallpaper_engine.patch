@@ -1,0 +1,111 @@
+From f2ce04d25f4a35f187799eff930f59c4ae1e1690 Mon Sep 17 00:00:00 2001
+From: Iason Malkotsis <imalkotsis@gmail.com>
+Date: Sun, 12 Oct 2025 20:42:53 +0300
+Subject: [PATCH 1/2] Fix compile error by refactoring some things in
+ MpvBackend.cpp
+
+---
+ src/backend_mpv/MpvBackend.cpp | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/src/backend_mpv/MpvBackend.cpp b/src/backend_mpv/MpvBackend.cpp
+index ae995121..78ab631b 100644
+--- a/src/backend_mpv/MpvBackend.cpp
++++ b/src/backend_mpv/MpvBackend.cpp
+@@ -37,7 +37,6 @@
+ #    include <QX11Info> // IWYU pragma: keep
+ #endif
+ //#endif
+-#    include <qpa/qplatformnativeinterface.h> // IWYU pragma: keep
+ #endif
+ 
+ Q_LOGGING_CATEGORY(wekdeMpv, "wekde.mpv")
+@@ -81,18 +80,23 @@ int CreateMpvContex(mpv_handle* mpv, mpv_render_context** mpv_gl) {
+     if (QGuiApplication::platformName().contains("xcb")) {
+         params[2].type = MPV_RENDER_PARAM_X11_DISPLAY;
+ #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+-        // TODO: QGuiApplication::nativeInterface<QNativeInterface::QX11Application>()::display();
+-        // same for wayland
+-        auto* native   = QGuiApplication::platformNativeInterface();
+-        params[2].data = native->nativeResourceForWindow("display", nullptr);
++        if (auto* x11App = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
++            params[2].data = x11App->display();
++        }
+ #else
+         params[2].data = QX11Info::display();
+ #endif
+     }
+     if (QGuiApplication::platformName().contains("wayland")) {
+         params[2].type = MPV_RENDER_PARAM_WL_DISPLAY;
++#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
++        if (auto* waylandApp = qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>()) {
++            params[2].data = waylandApp->display();
++        }
++#else
+         auto* native   = QGuiApplication::platformNativeInterface();
+         params[2].data = native->nativeResourceForWindow("display", nullptr);
++#endif
+     }
+ #endif
+     int code = mpv_render_context_create(mpv_gl, mpv, params);
+
+From 12d846cfa4410c8dffe62140a665eedb003fb7b4 Mon Sep 17 00:00:00 2001
+From: Iason Malkotsis <imalkotsis@gmail.com>
+Date: Sun, 12 Oct 2025 20:51:28 +0300
+Subject: [PATCH 2/2] Refactor audio mute handling in MpvObject to use audio
+ track ID
+
+Previously, muting/unmuting would not unload the entire audio backend, which would
+cause the audio track to still be loaded and consume some resources. Now, we set the
+audio track ID to "no" when muting, which completely disables audio processing in mpv.
+We probably won't notice a difference in most cases, but it was bugging me.
+It was setting an audio track at 48000 Hz even when muted and it was not
+allowing Pipewire to change frequencies on the fly.
+Not sure how to also handle it for the other video backend.
+---
+ src/backend_mpv/MpvBackend.cpp | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/src/backend_mpv/MpvBackend.cpp b/src/backend_mpv/MpvBackend.cpp
+index 78ab631b..f07a0099 100644
+--- a/src/backend_mpv/MpvBackend.cpp
++++ b/src/backend_mpv/MpvBackend.cpp
+@@ -89,11 +89,11 @@ int CreateMpvContex(mpv_handle* mpv, mpv_render_context** mpv_gl) {
+     }
+     if (QGuiApplication::platformName().contains("wayland")) {
+         params[2].type = MPV_RENDER_PARAM_WL_DISPLAY;
+-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+-        if (auto* waylandApp = qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>()) {
+-            params[2].data = waylandApp->display();
+-        }
+-#else
++    #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
++            if (auto* waylandApp = qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>()) {
++                params[2].data = waylandApp->display();
++            }
++    #else
+         auto* native   = QGuiApplication::platformNativeInterface();
+         params[2].data = native->nativeResourceForWindow("display", nullptr);
+ #endif
+@@ -184,13 +184,19 @@ MpvObject::Status MpvObject::status() const {
+ 
+ QUrl MpvObject::source() const { return m_source; }
+ 
+-bool MpvObject::mute() const { return getProperty("mute").toBool(); }
++bool MpvObject::mute() const {
++    QString aid = getProperty("aid").toString();
++    return aid == "no";
++}
+ 
+ QString MpvObject::logfile() const { return getProperty("log-file").toString(); }
+ 
+ int MpvObject::volume() const { return getProperty("volume").toInt(); }
+ 
+-void MpvObject::setMute(const bool& mute) { setProperty("mute", mute); }
++void MpvObject::setMute(const bool& mute) {
++    // aid is the audio track ID, "no" means no audio track
++    setProperty("aid", mute ? "no" : "auto");
++}
+ 
+ void MpvObject::setVolume(const int& volume) { setProperty("volume", volume); }
+ 

@@ -12,7 +12,10 @@
         signon-ui = final.kdePackages.callPackage ../packages/signon-ui { };
         wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
           # version = "0.5.4-unstable-2025-06-29-dirty";
-          patches = (old.patches or []) ++ [ ./kde-patches/cmake_update.patch ];
+          patches = (old.patches or []) ++ [ 
+            ./kde-patches/cmake_update.patch
+            ./kde-patches/wallpaper_engine.patch
+          ];
         });
       };
       kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
