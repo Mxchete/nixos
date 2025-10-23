@@ -1,15 +1,38 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aaaa8ff..49f6c63 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -22,6 +22,12 @@ include(cmake/qtversion.cmake)
+ find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS ConfigWidgets I18n)
+ 
+ if(${QT_MAJOR_VERSION} EQUAL 6)
++    find_package(Qt6 REQUIRED COMPONENTS DBus)
++
++    if(${Qt6_VERSION} VERSION_GREATER_EQUAL 6.10)
++      find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
++    endif()
++
+     find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KCMUtils)
+ 
+     option(KWIN_X11 "Build for KWin X11 instead of Wayland" OFF)
 diff --git a/src/kcm/CMakeLists.txt b/src/kcm/CMakeLists.txt
-index 71c1ace..d95b395 100644
+index 71c1ace..a26d4f7 100644
 --- a/src/kcm/CMakeLists.txt
 +++ b/src/kcm/CMakeLists.txt
-@@ -15,8 +15,9 @@ kcoreaddons_add_plugin(kwin_shapecorners_config INSTALL_NAMESPACE "${KWIN_NAMESP
+@@ -15,12 +15,15 @@ kcoreaddons_add_plugin(kwin_shapecorners_config INSTALL_NAMESPACE "${KWIN_NAMESP
  
  if(${QT_MAJOR_VERSION} EQUAL 6)
      target_link_libraries(kwin_shapecorners_config
 -            Qt${QT_MAJOR_VERSION}::CorePrivate
++            PUBLIC
              KF${QT_MAJOR_VERSION}::KCMUtils
 +            PRIVATE
 +            Qt::CorePrivate
      )
  endif ()
  
+ target_link_libraries(kwin_shapecorners_config
++    PUBLIC
+     Qt${QT_MAJOR_VERSION}::DBus
+     KF${QT_MAJOR_VERSION}::ConfigWidgets
+     KF${QT_MAJOR_VERSION}::I18n

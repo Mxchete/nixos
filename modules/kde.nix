@@ -16,11 +16,11 @@
         });
       };
       kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
-        version = "0.8.5-dirty";
-        src = old.src.override {
-          rev = "806b6cde5ef2c1a03d3c1596168edf635d5d2132";
-        #     hash = "sha256-00000000000000000000000000000000000000000000";
-        };
+        # version = "0.8.5-dirty";
+        # src = old.src.override {
+        #   rev = "806b6cde5ef2c1a03d3c1596168edf635d5d2132";
+        # #     hash = "sha256-00000000000000000000000000000000000000000000";
+        # };
         patches = (old.patches or []) ++ [ ./kde-patches/rounded_corner_cmake.patch ];
       });
     })
