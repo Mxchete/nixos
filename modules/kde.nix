@@ -11,14 +11,18 @@
         };
         signon-ui = final.kdePackages.callPackage ../packages/signon-ui { };
         wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
-          version = "0.5.4-unstable-2025-06-29-dirty";
+          # version = "0.5.4-unstable-2025-06-29-dirty";
           patches = (old.patches or []) ++ [ ./kde-patches/cmake_update.patch ];
         });
       };
-      # kdePackages.wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs ({ patches, ... }: {
-      #   version = "0.5.4-unstable-2025-06-29-dirty";
-      #   patches = (old.patches or []) ++ [ ./kde-patches/cmake_update.patch ];
-      # });
+      kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
+        version = "0.8.5-dirty";
+        src = old.src.override {
+          rev = "806b6cde5ef2c1a03d3c1596168edf635d5d2132";
+        #     hash = "sha256-00000000000000000000000000000000000000000000";
+        };
+        patches = (old.patches or []) ++ [ ./kde-patches/rounded_corner_cmake.patch ];
+      });
     })
   ];
   # services.displayManager.gdm.enable = lib.mkForce false;
@@ -44,7 +48,7 @@
   # programs.ssh.askPassword = lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   environment.systemPackages = with pkgs; [
     kdePackages.qtbase
-    # kde-rounded-corners
+    kde-rounded-corners
     kdePackages.wallpaper-engine-plugin
     kdePackages.sddm-kcm
     kdePackages.accounts-qt

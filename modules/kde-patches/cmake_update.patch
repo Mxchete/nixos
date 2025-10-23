@@ -1,15 +1,37 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e1298ba..ca6efba 100644
+index e1298ba..1cd3a50 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -52,6 +52,10 @@ if(NOT DEFINED QT_MAJOR_VERSION)
  message(FATAL_ERROR "Qt not found")
  endif()
  
-+if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
-+    find_package(Qt6GuiPrivate REQUIRED)
-+endif()
++# if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
++#     find_package(Qt6GuiPrivate REQUIRED)
++# endif()
 +
  if(NOT USE_PLASMAPKG)
    plasma_install_package(plugin com.github.catsout.wallpaperEngineKde wallpapers
                           wallpaper)
+diff --git a/src/backend_mpv/CMakeLists.txt b/src/backend_mpv/CMakeLists.txt
+index f46214a..4e44d20 100644
+--- a/src/backend_mpv/CMakeLists.txt
++++ b/src/backend_mpv/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ project(mpvbackend)
+ 
+-find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Gui Quick REQUIRED)
+-include_directories(${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS})
++find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Gui Quick GuiPrivate REQUIRED)
++# include_directories(${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS})
+ 
+ find_package(PkgConfig REQUIRED)
+ pkg_check_modules(MPV REQUIRED mpv)
+@@ -19,6 +19,7 @@ target_link_libraries(${PROJECT_NAME}
+ 	PRIVATE 
+     Qt::Quick
+ 	Qt::Gui
++	Qt::GuiPrivate
+ 	# Qt::X11Extras
+ 	${MPV_LIBRARIES}
+ )

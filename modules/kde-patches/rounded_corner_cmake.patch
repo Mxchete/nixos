@@ -1,0 +1,15 @@
+diff --git a/src/kcm/CMakeLists.txt b/src/kcm/CMakeLists.txt
+index 71c1ace..d95b395 100644
+--- a/src/kcm/CMakeLists.txt
++++ b/src/kcm/CMakeLists.txt
+@@ -15,8 +15,9 @@ kcoreaddons_add_plugin(kwin_shapecorners_config INSTALL_NAMESPACE "${KWIN_NAMESP
+ 
+ if(${QT_MAJOR_VERSION} EQUAL 6)
+     target_link_libraries(kwin_shapecorners_config
+-            Qt${QT_MAJOR_VERSION}::CorePrivate
+             KF${QT_MAJOR_VERSION}::KCMUtils
++            PRIVATE
++            Qt::CorePrivate
+     )
+ endif ()
+ 
