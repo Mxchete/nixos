@@ -343,6 +343,7 @@ in
   services.hardware.openrgb.enable = true;
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
+  services.journald.extraConfig = "MaxFileSec=1month";
   services.snapper = {
     snapshotInterval = "hourly";  # used with `OnCalendar`, so must be interval
     cleanupInterval = "3h";  # used with `OnUnitActiveSec`, so must be duration

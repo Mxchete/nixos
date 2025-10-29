@@ -12,10 +12,23 @@
         signon-ui = final.kdePackages.callPackage ../packages/signon-ui { };
         wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
           # version = "0.5.4-unstable-2025-06-29-dirty";
+          extraCmakeFlags = (old.extraCmakeFlags or []) ++ [ "-DCMAKE_BUILD_TYPE=Debug" ];
           patches = (old.patches or []) ++ [ 
             ./kde-patches/cmake_update.patch
             ./kde-patches/wallpaper_engine.patch
           ];
+          # installPhase = ''
+          #   runHook preInstall
+          #
+          #   ${old.installPhase or "cmake --install . --prefix=$out"}
+          #
+          #   if [ -f "${"$"}{PWD}/sceneviewer" ]; then
+          #     mkdir -p "$out/bin"
+          #     cp sceneviewer "$out/bin/"
+          #   fi
+          #
+          #   runHook postInstall
+          # '';
         });
       };
       kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
@@ -45,6 +58,8 @@
   # security.pam.services.gdm.enableGnomeKeyring = true;
   # security.pam.services.gdm-password.enableGnomeKeyring = true;
   environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory
+  environment.variables.POWERDEVIL_NO_DDCUTIL = "1";
+  environment.variables.KWIN_USE_OVERLAYS = "1";
   # services.displayManager.sddm.enable = true;
   # services.displayManager.sddm.wayland.enable = true;
   # services.desktopManager.plasma6.enable = true;
@@ -52,7 +67,7 @@
   environment.systemPackages = with pkgs; [
     kdePackages.qtbase
     kde-rounded-corners
-    kdePackages.wallpaper-engine-plugin
+    # kdePackages.wallpaper-engine-plugin
     kdePackages.sddm-kcm
     kdePackages.accounts-qt
     kdePackages.calendarsupport

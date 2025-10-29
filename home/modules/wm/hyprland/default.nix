@@ -1,10 +1,14 @@
 { config, lib, pkgs, inputs, ... }:
 {
+  # programs.ax-shell = {
+  #   enable = true;
+  # };
   # nixpkgs.overlays = [
   #   (final: prev: {
   #     hyprspace = prev.
   #   })
   # ];
+  programs.dankMaterialShell.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -16,10 +20,8 @@
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
+      inputs.hy3.packages.x86_64-linux.hy3
       # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
-      (pkgs.callPackage ../../../../packages/csd-titlebar-move/plugin.nix {
-        hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      })
     ];
     extraConfig = ''
       # #######################################################################################
@@ -70,7 +72,8 @@
       # Or execute your favorite apps at launch like this:
 
           # exec-once = qs -c caelestia
-          exec-once = __GL_THREADED_OPTIMIZATIONS=0 linux-wallpaperengine 2809770238 --silent --screen-root DP-1
+          # exec-once = __GL_THREADED_OPTIMIZATIONS=0 linux-wallpaperengine 2809770238 --silent --screen-root DP-1
+          exec-once = linux-wallpaperengine 2943643045 --silent --screen-root DP-1
           exec-once = hyprctl setcursor Adwaita 24
       # exec-once = nm-applet &
       # exec-once = waybar & hyprpaper & firefox

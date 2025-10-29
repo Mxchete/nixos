@@ -16,6 +16,7 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
@@ -29,6 +30,16 @@
       url = "github:KZDKM/Hyprspace";
       inputs.hyprland.follows = "hyprland";
     };
+    hy3 = {
+      url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
+      # or "github:outfoxxed/hy3" to follow the development branch.
+      # (you may encounter issues if you dont do the same for hyprland)
+      inputs.hyprland.follows = "hyprland";
+    };
+    # ax-shell = {
+    #   url = "github:poogas/Ax-Shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     kwin-effects-forceblur = {
       url = "github:taj-ny/kwin-effects-forceblur";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,6 +71,24 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dgop.follows = "dgop";
+      inputs.dms-cli.follows = "dms-cli";
+    };
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
@@ -69,6 +98,8 @@
     , home-manager
     , nix-colors
     , nur
+    , hy3
+    # , ax-shell
       # , ghostty
       # , mikuboot
       # , hyprland
