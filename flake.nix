@@ -7,6 +7,12 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
+    # Temp until updated by lzbt
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -75,18 +81,22 @@
       url = "github:AvengeMedia/dgop";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dms-cli = {
-      url = "github:AvengeMedia/danklinux";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.dgop.follows = "dgop";
-      inputs.dms-cli.follows = "dms-cli";
-    };
+    # dms-cli = {
+    #   url = "github:AvengeMedia/danklinux";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # dankMaterialShell = {
+    #   url = "github:AvengeMedia/DankMaterialShell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.dgop.follows = "dgop";
+    #   inputs.dms-cli.follows = "dms-cli";
+    # };
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -130,6 +140,7 @@
             ./modules/kde.nix
             ./modules/hyprland.nix
             ./modules/niri.nix
+            ./modules/noctalia.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

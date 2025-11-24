@@ -301,7 +301,7 @@ in
     neovim
     nexusmods-app-unfree
     oneko
-    openloco
+    # openloco
     # openrct2
     openrgb-with-all-plugins
     oreo-cursors-plus
@@ -329,6 +329,7 @@ in
     vscode
     vscode.fhs
     wget
+    # winboat
     wirelesstools
     wl-clipboard
     yt-dlp
@@ -338,6 +339,7 @@ in
 
 
   # Services
+  services.orca.enable = lib.mkForce false; 
   services.xserver.enable = true;
   services.flatpak.enable = true;
   services.hardware.openrgb.enable = true;

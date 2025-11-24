@@ -30,7 +30,6 @@
     # dash-to-panel
     dynamic-calendar-and-clocks-icons
     foresight
-    fullscreen-to-empty-workspace
     fuzzy-app-search
     gsconnect
     just-perfection

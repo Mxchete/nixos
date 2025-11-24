@@ -31,14 +31,14 @@
           # '';
         });
       };
-      kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
-        # version = "0.8.5-dirty";
-        # src = old.src.override {
-        #   rev = "806b6cde5ef2c1a03d3c1596168edf635d5d2132";
-        # #     hash = "sha256-00000000000000000000000000000000000000000000";
-        # };
-        patches = (old.patches or []) ++ [ ./kde-patches/rounded_corner_cmake.patch ];
-      });
+      # kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
+      #   # version = "0.8.5-dirty";
+      #   # src = old.src.override {
+      #   #   rev = "806b6cde5ef2c1a03d3c1596168edf635d5d2132";
+      #   # #     hash = "sha256-00000000000000000000000000000000000000000000";
+      #   # };
+      #   patches = (old.patches or []) ++ [ ./kde-patches/rounded_corner_cmake.patch ];
+      # });
     })
   ];
   # services.displayManager.gdm.enable = lib.mkForce false;
@@ -60,6 +60,7 @@
   environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory
   environment.variables.POWERDEVIL_NO_DDCUTIL = "1";
   environment.variables.KWIN_USE_OVERLAYS = "1";
+  environment.variables.QT_WAYLAND_HARDWARE_INTEGRATION = "linux-dmabuf-unstable-v1";
   # services.displayManager.sddm.enable = true;
   # services.displayManager.sddm.wayland.enable = true;
   # services.desktopManager.plasma6.enable = true;

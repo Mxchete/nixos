@@ -128,7 +128,7 @@
     NVD_BACKEND = "direct";
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+    # __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
     # New Trying to Improve performance
     GBM_BACKENDS_PATH = "/run/opengl-driver/lib/gbm";
     __GL_THREADED_OPTIMIZATION = "1";
@@ -166,19 +166,19 @@
       enable32Bit = true;
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
-        vaapiVdpau
+        libva-vdpau-driver
         libvdpau-va-gl
         libva-utils
         vdpauinfo
-        egl-wayland
-        eglexternalplatform
+        # egl-wayland
+        # eglexternalplatform
         wayland
         wgpu-utils
         libglvnd
         # nvtop
         nvitop
         libGL
-        glxinfo
+        mesa-demos
         clinfo
       ];
     };

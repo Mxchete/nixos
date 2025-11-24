@@ -8,7 +8,7 @@
   #     hyprspace = prev.
   #   })
   # ];
-  programs.dankMaterialShell.enable = true;
+  # programs.dankMaterialShell.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -21,7 +21,7 @@
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
       inputs.hy3.packages.x86_64-linux.hy3
-      # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
+      inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
     ];
     extraConfig = ''
       # #######################################################################################
@@ -199,7 +199,7 @@
       # windowrule = rounding 0, floating:0, onworkspace:w[tv1]
       # windowrule = bordersize 0, floating:0, onworkspace:f[1]
       # windowrule = rounding 0, floating:0, onworkspace:f[1]
-      windowrule = opacity 0.99999 override, class:zen*
+      # windowrule = opacity 0.99999 override, class:zen*
 
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           dwindle {
@@ -234,7 +234,7 @@
               follow_mouse = 2
               accel_profile = flat
 
-              sensitivity = 0.3 # -1.0 - 1.0, 0 means no modification.
+              sensitivity = -0.2 # -1.0 - 1.0, 0 means no modification.
 
               touchpad {
                   natural_scroll = false
@@ -349,16 +349,16 @@
       # windowrule = float,class:^(kitty)$,title:^(kitty)$
 
       # Ignore maximize requests from apps. You'll probably like this.
-          windowrule = suppressevent maximize, class:.*
+          # windowrule = suppressevent maximize, class:.*
 
       # Fix some dragging issues with XWayland
-          windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+          # windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 
       # Float Windows by default
-          windowrulev2 = float, class:.*
+          # windowrulev2 = float, class:.*
 
       # Set zen size
-      windowrulev2 = size 1200 800, class:^(.*zen.*)$
+      # windowrulev2 = size 1200 800, class:^(.*zen.*)$
 
       # Snap Windows
           general:snap {
@@ -516,6 +516,7 @@
               gesture_fingers = 3  # 3 or 4
               gesture_distance = 300 # how far is the "max"
               gesture_positive = true # positive = swipe down. Negative = swipe up.
+              skip_empty = true
           }
       }
     '';

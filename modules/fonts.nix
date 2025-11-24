@@ -23,7 +23,7 @@
       nerd-fonts.caskaydia-cove
       nerd-fonts.caskaydia-mono
       corefonts
-      vistafonts
+      vista-fonts
       sddm-astronaut-fonts
     ];
   };

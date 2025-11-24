@@ -12,7 +12,18 @@
       bar.status = {
         showBattery = false;
       };
-      paths.wallpaperDir = "~/Images";
+      osd = {
+        enableBrightness = false;
+        enableMicrophone = true;
+      };
+      background = {
+        # enabled = false;
+        DesktopClock.enabled = true;
+        Visualizer.enabled = true;
+      };
+      appearance.transparency = {
+        enabled = true;
+      };
     };
     cli = {
       enable = true; # Also add caelestia-cli to path
