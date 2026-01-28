@@ -16,12 +16,13 @@
       enable = false;
       variables = [ "--all" ];
     };
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
-      inputs.hy3.packages.x86_64-linux.hy3
-      inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      pkgs.hyprlandPlugins.hyprexpo
+      # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
+      # inputs.hy3.packages.x86_64-linux.hy3
+      # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
     ];
     extraConfig = ''
       # #######################################################################################
@@ -347,6 +348,7 @@
 
       # Example windowrule
       # windowrule = float,class:^(kitty)$,title:^(kitty)$
+      # layerrule = blur, quickshell
 
       # Ignore maximize requests from apps. You'll probably like this.
           # windowrule = suppressevent maximize, class:.*

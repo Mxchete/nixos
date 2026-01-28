@@ -17,10 +17,10 @@
       };
 
       input-field = {
-        size = {
-          width = 200;
-          height = 20;
-        };
+        # size = {
+        #   width = 200;
+        #   height = 20;
+        # };
 
         outline_thickness = 3;
         dots_size = 0.33;

@@ -2,7 +2,10 @@
   description = "NixOS Top Level flake.nix";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    # Chaotic ded
+    # chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    # Keep an eye on this flake to replace it
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
     # nix-software-center.url = "github:snowfallorg/nix-software-center";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
@@ -103,7 +106,8 @@
   outputs =
     { self
     , nixpkgs
-    , chaotic
+    , nix-cachyos-kernel
+    # , chaotic
     , lanzaboote
     , home-manager
     , nix-colors
@@ -126,12 +130,13 @@
             # ./modules/specialisation.nix
             ./configuration.nix
             ({ pkgs, ... }: {
-              environment.systemPackages = [
-                # ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-              ];
+              nixpkgs.overlays = [ nix-cachyos-kernel.overlay ];
+              boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+              # nix.settings.substituters = [ "https://cache.garnix.io" ];
+              # nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
             })
             # mikuboot.nixosModules.default
-            chaotic.nixosModules.default
+            # chaotic.nixosModules.default
             nur.modules.nixos.default
             lanzaboote.nixosModules.lanzaboote
             ./modules/lanza.nix

@@ -36,7 +36,9 @@
     # theme = "rings"; # Consider themes in the future?
     # extraConfig = "DeviceTimeout=10";
   };
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-gcc.cachyOverride { mArch = "ZEN4"; };
+  # boot.kernelPackages = pkgs.linuxPackages_cachyos-gcc.cachyOverride { mArch = "ZEN4"; };
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
   };
@@ -130,7 +132,7 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     # __EGL_VENDOR_LIBRARY_FILENAMES = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
     # New Trying to Improve performance
-    GBM_BACKENDS_PATH = "/run/opengl-driver/lib/gbm";
+    # GBM_BACKENDS_PATH = "/run/opengl-driver/lib/gbm";
     __GL_THREADED_OPTIMIZATION = "1";
     __GL_SHADER_CACHE = "1";
     WLR_BACKEND = "vulkan";
@@ -190,7 +192,19 @@
       nvidiaPersistenced = true;
       # powerManagement.finegrained = true;
       open = true;
+      # Add patch until next driver release
       package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidiaPackages.latest // {
+      #   open = config.boot.kernelPackages.nvidiaPackages.latest.open.overrideAttrs (old: {
+      #     patches = (old.patches or [ ]) ++ [
+      #       (pkgs.fetchpatch {
+      #         name = "get_dev_pagemap.patch";
+      #         url = "https://github.com/NVIDIA/open-gpu-kernel-modules/commit/3e230516034d29e84ca023fe95e284af5cd5a065.patch";
+      #         hash = "sha256-BhL4mtuY5W+eLofwhHVnZnVf0msDj7XBxskZi8e6/k8=";
+      #       })
+      #     ];
+      #   });
+      # };
       nvidiaSettings = true;
       # prime = {
       #   offload = {

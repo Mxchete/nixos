@@ -77,12 +77,13 @@ in
   #   restartIfChanged = false;
   #   enable = true;
   # };
-  systemd.services."plymouth-quit-retainer" = {
+  systemd.services.plymouth-quit-retainer = {
+    enable = lib.mkForce true;
     after = [ "plymouth-quit.service"];
     conflicts = [ "plymouth-quit.service"];
     serviceConfig = {
-      ExecStartPre = "${pkgs.plymouth}/bin/plymouth deactivate";
-      ExecStartPost = "${pkgs.plymouth}/bin/plymouth quit --retain-splash";
+      ExecStart = "${pkgs.plymouth}/bin/plymouth deactivate";
+      ExecStop = "${pkgs.plymouth}/bin/plymouth quit --retain-splash";
     };
   };
 

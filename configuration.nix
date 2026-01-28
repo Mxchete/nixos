@@ -244,7 +244,7 @@ in
       steamtinkerlaunch
       proton-ge-bin
       protonup-qt
-      proton-cachyos_x86_64_v4
+      # proton-cachyos_x86_64_v4
     ];
   };
   programs.gamemode.enable = true;
@@ -299,8 +299,8 @@ in
     morewaita-icon-theme
     mpv
     neovim
-    nexusmods-app-unfree
-    oneko
+    # nexusmods-app-unfree
+    # oneko
     # openloco
     # openrct2
     openrgb-with-all-plugins
