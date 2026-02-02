@@ -272,6 +272,6 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  nix.settings.max-jobs = 16;
-  nix.settings.cores = 16;
+  nix.settings.max-jobs = 8;
+  nix.settings.cores = 8;
 }
