@@ -255,7 +255,7 @@ in
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     # Packages
-    inputs.quickshell.packages.${system}.default
+    inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     adw-gtk3
     ani-cli
     arrpc

@@ -4,7 +4,7 @@
   # Makes kde better according to <github link>
   nixpkgs.overlays = lib.singleton (final: prev: {
     kdePackages = prev.kdePackages // {
-      wallpaper-engine-plugin = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
+      wallpaper-engine-plugin-new = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
         version = "0.5.4-unstable-2025-12-14-dirty";
         src = prev.fetchFromGitHub {
           owner = "catsout";
@@ -134,7 +134,7 @@
   environment.systemPackages = with pkgs; [
     kdePackages.qtbase
     kde-rounded-corners
-    kdePackages.wallpaper-engine-plugin
+    kdePackages.wallpaper-engine-plugin-new
     kdePackages.sddm-kcm
     kdePackages.accounts-qt
     kdePackages.calendarsupport
@@ -160,7 +160,7 @@
     papirus-icon-theme
     darkly
     klassy
-    inputs.kwin-effects-forceblur.packages.${pkgs.system}.default
+    inputs.kwin-effects-forceblur.packages.${pkgs.stdenv.hostPlatform.system}.default
     # (kdePackages.signond.override {
     #   withOAuth2 = true;
     #   withKWallet = true;

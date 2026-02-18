@@ -131,7 +131,7 @@
             ./configuration.nix
             ({ pkgs, ... }: {
               nixpkgs.overlays = [ nix-cachyos-kernel.overlay ];
-              boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+              boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
               # nix.settings.substituters = [ "https://cache.garnix.io" ];
               # nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
             })
@@ -143,6 +143,7 @@
             ./modules/gnome.nix
             ./modules/sddm.nix
             ./modules/kde.nix
+            ./modules/xfce.nix
             ./modules/hyprland.nix
             ./modules/niri.nix
             ./modules/noctalia.nix
