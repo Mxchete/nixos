@@ -2,7 +2,7 @@
 
 {
   programs.labwc.enable = true;
-  services.desktopManager.xfce.enable = true;
-  services.desktopManager.xfce.enableWaylandSession = true;
+  services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.desktopManager.xfce.enableWaylandSession = true;
 }
 

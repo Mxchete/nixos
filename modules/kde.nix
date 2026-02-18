@@ -65,6 +65,12 @@
       in derivedPkg;
     };
   });
+  imports = [
+    ../packages/wallpaper-engine-kde-plugin
+  ];
+  nixos.pkgs = {
+    wallpaper-engine-kde-plugin.enable = true;
+  };
   # nixpkgs.overlays = [
   #   # Missing packages for KIO GDrive
   #   (final: prev: {
@@ -134,7 +140,7 @@
   environment.systemPackages = with pkgs; [
     kdePackages.qtbase
     kde-rounded-corners
-    kdePackages.wallpaper-engine-plugin-new
+    # kdePackages.wallpaper-engine-plugin-new
     kdePackages.sddm-kcm
     kdePackages.accounts-qt
     kdePackages.calendarsupport
