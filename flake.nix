@@ -49,8 +49,8 @@
     #   url = "github:poogas/Ax-Shell";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-    kwin-effects-forceblur = {
-      url = "github:taj-ny/kwin-effects-forceblur";
+    kwin-effects-glass = {
+      url = "github:4v3ngR/kwin-effects-glass";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     quickshell = {

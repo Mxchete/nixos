@@ -3,6 +3,13 @@
 {
   # Makes kde better according to <github link>
   nixpkgs.overlays = lib.singleton (final: prev: {
+    kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
+      version = "0.8.6-dirty";
+      src = old.src.override {
+        rev = "cf5f80f80772fc47302b1d1adaeb9bc22a2e8756";
+        hash = "sha256-Q9hO8XGeyztHLXB4rZzv/aV84xj2c/h2P/jKrb9bUUA=";
+      };
+    });
     kdePackages = prev.kdePackages // {
       wallpaper-engine-plugin-new = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
         version = "0.5.4-unstable-2025-12-14-dirty";
@@ -111,36 +118,21 @@
   #     # });
   #   })
   # ];
-  # services.displayManager.gdm.enable = lib.mkForce false;
-  # services.displayManager.gdm.wayland = lib.mkForce false;
-  # services.displayManager.sddm.enable = true;
-  # services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.desktopManager.plasma6.enableQt5Integration = true;
   services.displayManager.defaultSession = "plasma";
-  # programs.ssh.askPassword = lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
   programs.kdeconnect.enable = true;
-  # services.accounts-daemon.enable = true;
-  # services.gnome.gnome-settings-daemon.enable = true;
-  # services.gnome.gnome-keyring.enable = true;
-  # security.pam.services.sddm.enableGnomeKeyring = true;
-  # security.pam.services.gdm.enableGnomeKeyring = true;
-  # security.pam.services.gdm-password.enableGnomeKeyring = true;
   environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory
   environment.variables.POWERDEVIL_NO_DDCUTIL = "1";
   environment.variables.KWIN_USE_OVERLAYS = "1";
   environment.variables.QT_WAYLAND_HARDWARE_INTEGRATION = "linux-dmabuf-unstable-v1";
   environment.variables.GTK_IM_MODULE = lib.mkForce null;
   environment.variables.QT_IM_MODULE = lib.mkForce null;
-  # services.displayManager.sddm.enable = true;
-  # services.displayManager.sddm.wayland.enable = true;
-  # services.desktopManager.plasma6.enable = true;
-  # programs.ssh.askPassword = lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
   environment.systemPackages = with pkgs; [
     kdePackages.qtbase
+    # Update rounded corners
     kde-rounded-corners
-    # kdePackages.wallpaper-engine-plugin-new
     kdePackages.sddm-kcm
     kdePackages.accounts-qt
     kdePackages.calendarsupport
@@ -161,22 +153,14 @@
     kdePackages.qtwebsockets
     kdePackages.qt5compat
     kdePackages.qtpositioning
+    kdePackages.qtstyleplugin-kvantum
     kdiff3
     glava
     papirus-icon-theme
     darkly
     klassy
-    inputs.kwin-effects-forceblur.packages.${pkgs.stdenv.hostPlatform.system}.default
-    # (kdePackages.signond.override {
-    #   withOAuth2 = true;
-    #   withKWallet = true;
-    # })
-    # kdePackages.signon-plugin-oauth2
-    # kdePackages.signon-ui
+    # Update Forceblur
+    inputs.kwin-effects-glass.packages.${pkgs.system}.default
   ];
-  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #   # kdeconnect
-  #   ksshaskpass
-  # ];
 }
 

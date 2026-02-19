@@ -194,7 +194,7 @@ in
 
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -223,6 +223,7 @@ in
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
+    # docker.enable = true;
   };
   virtualisation.waydroid.enable = true; # Broken, python version issue
   boot.binfmt.emulatedSystems = [
@@ -329,7 +330,7 @@ in
     vscode
     vscode.fhs
     wget
-    # winboat
+    winboat
     wirelesstools
     wl-clipboard
     yt-dlp

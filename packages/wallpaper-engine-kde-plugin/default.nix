@@ -10,8 +10,8 @@ let
     src = fetchFromGitHub {
       owner = "KhronosGroup";
       repo = "glslang";
-      rev = "c34bb3b6c55f6ab084124ad964be95a699700d34";
-      sha256 = "IMROcny+b5CpmzEfvKBYDB0QYYvqC5bq3n1S4EQ6sXc=";
+      rev = "b5782e52ee2f7b3e40bb9c80d15b47016e008bc9";
+      sha256 = "sha256-cEREniYgSd62mnvKaQkgs69ETL5pLl5Gyv3hKOtSv3w=";
     };
   };
 
@@ -22,9 +22,9 @@ let
       owner = "catsout";
       repo = "wallpaper-engine-kde-plugin";
       rev = version;
-      hash = "sha256-vkWEGlDQpfJ3fAimJHZs+aX6dh/fLHSRy2tLEsgu/JU=";
+      hash = "sha256-otdfGa63w1TfMhYFBauJvxV90OqLqJSEvWB2j0W0E5g=";
       fetchSubmodules = true;
-        };
+    };
 
     nativeBuildInputs = [
       cmake
@@ -34,36 +34,51 @@ let
       gst_all_1.gst-libav
       shaderc
       ninja
+      makeWrapper
+      (python3.withPackages (ps: with ps; [ websockets ]))
     ];
 
     buildInputs = [
       mpv
+      libass
       lz4
       vulkan-headers
       vulkan-tools
       vulkan-loader
     ] 
-    ++ (with kdePackages; with qt6Packages; [
+    ++ (with kdePackages; [
       qtbase
-      qt6.full
-      kpackage
-      kdeclarative
-      libplasma
+      qtsvg
+      qtwayland
+      qtdeclarative
+      qttools
       qtwebsockets
       qtwebengine
       qtwebchannel
       qtmultimedia
-      qtdeclarative
+      kpackage
+      kdeclarative
+      libplasma
     ])
     ++ [(python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))];
 
-    cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ];
+    cmakeFlags = [
+      "-DUSE_PLASMAPKG=OFF"
+      "-DQt6_DIR=${qt6Packages.qtbase}/lib/cmake/Qt6"
+      "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    ];
     dontWrapQtApps = true;
 
     postPatch = ''
       rm -rf src/backend_scene/third_party/glslang
       ln -s ${glslang-submodule.src} src/backend_scene/third_party/glslang
     '';
+
+    postInstall = ''
+      chmod +x $out/share/plasma/wallpapers/com.github.catsout.wallpaperEngineKde/contents/pyext.py
+      patchShebangs --build $out/share/plasma/wallpapers/com.github.catsout.wallpaperEngineKde/contents/pyext.py
+    '';
+
     #Optional informations
     meta = with lib; {
       description = "Wallpaper Engine KDE plasma plugin";
@@ -93,6 +108,10 @@ in
       kdePackages.qtwebchannel
       (python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))
     ];
+
+    environment.sessionVariables = {
+      PYTHONPATH = "${pkgs.python3.withPackages (p: [ p.websockets ])}/${pkgs.python3.sitePackages}:$PYTHONPATH";
+    };
 
     system.activationScripts = {
       wallpaper-engine-kde-plugin.text = ''
