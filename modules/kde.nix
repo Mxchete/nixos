@@ -74,9 +74,11 @@
   });
   imports = [
     ../packages/wallpaper-engine-kde-plugin
+    ../packages/kara-git
   ];
   nixos.pkgs = {
     wallpaper-engine-kde-plugin.enable = true;
+    kara-git.enable = true;
   };
   # nixpkgs.overlays = [
   #   # Missing packages for KIO GDrive

@@ -304,7 +304,7 @@ in
     # oneko
     # openloco
     # openrct2
-    openrgb-with-all-plugins
+    # openrgb-with-all-plugins
     oreo-cursors-plus
     pavucontrol
     pay-respects
@@ -334,7 +334,7 @@ in
     wirelesstools
     wl-clipboard
     yt-dlp
-    xorg.xeyes
+    xeyes
     zoom-us
   ];
 
@@ -343,7 +343,7 @@ in
   services.orca.enable = lib.mkForce false; 
   services.xserver.enable = true;
   services.flatpak.enable = true;
-  services.hardware.openrgb.enable = true;
+  # services.hardware.openrgb.enable = true;
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
   services.journald.extraConfig = "MaxFileSec=1month";
