@@ -8,7 +8,7 @@ let
       owner = "dhruv8sh";
       repo = "kara";
       rev = version;
-      hash = "sha256-otdfGa63w1TfMhYFBauJvxV90OqLqJSEvWB2j0W0E5g=";
+      hash = "sha256-SqFEtz4X9ZbzA4hEgHLDIqhQE0kuB6ht5i1gyFeEHyM=";
     };
 
     nativeBuildInputs = [
