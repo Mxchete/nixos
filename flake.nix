@@ -107,13 +107,13 @@
     { self
     , nixpkgs
     , nix-cachyos-kernel
-    # , chaotic
+      # , chaotic
     , lanzaboote
     , home-manager
     , nix-colors
     , nur
     , hy3
-    # , ax-shell
+      # , ax-shell
       # , ghostty
       # , mikuboot
       # , hyprland
@@ -142,6 +142,7 @@
             ./modules/lanza.nix
             ./modules/gnome.nix
             ./modules/sddm.nix
+            # ./modules/plm.nix
             ./modules/kde.nix
             ./modules/xfce.nix
             ./modules/hyprland.nix

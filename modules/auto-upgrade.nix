@@ -27,7 +27,7 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    dates = "daily";
+    dates = "06:00";
     persistent = true;
     operation = "boot";
     flake = inputs.self.outPath;
