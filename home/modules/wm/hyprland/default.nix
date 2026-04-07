@@ -19,7 +19,7 @@
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      pkgs.hyprlandPlugins.hyprexpo
+      # pkgs.hyprlandPlugins.hyprexpo
       # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
       # inputs.hy3.packages.x86_64-linux.hy3
       # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace

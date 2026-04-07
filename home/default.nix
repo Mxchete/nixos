@@ -3,7 +3,7 @@
   imports = [
     # inputs.ax-shell.homeManagerModules.default
     # inputs.dankMaterialShell.homeModules.dankMaterialShell.default
-    inputs.caelestia-shell.homeManagerModules.default
+    # inputs.caelestia-shell.homeManagerModules.default
     ./home-configuration.nix
     ./modules/shell
     ./modules/wm/hyprland
@@ -11,7 +11,7 @@
     ./modules/bar/waybar
     ./modules/wofi
     ./modules/programs/neovim
-    ./modules/programs/caelestia
+    # ./modules/programs/caelestia
     # ./modules/hypr/hyprpanel
   ];
   # programs.ax-shell = {

@@ -252,6 +252,10 @@ in
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
 
+  environment.variables = {
+    NIX_NEOVIM = "1";
+  };
+
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
@@ -261,7 +265,7 @@ in
     ani-cli
     arrpc
     better-control
-    bitwarden-desktop
+    # bitwarden-desktop
     btop
     cargo
     celluloid
@@ -331,7 +335,7 @@ in
     vscode
     vscode.fhs
     wget
-    winboat
+    # winboat
     wirelesstools
     wl-clipboard
     yt-dlp

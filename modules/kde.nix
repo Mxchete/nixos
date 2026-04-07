@@ -151,6 +151,7 @@
     kdePackages.qtmultimedia
     kdePackages.kzones
     kdePackages.krfb
+    kdePackages.krdc
     kdePackages.layer-shell-qt
     kdePackages.qtwebsockets
     kdePackages.qt5compat

@@ -102,6 +102,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
   outputs =
     { self
@@ -113,6 +114,7 @@
     , nix-colors
     , nur
     , hy3
+    , nix-doom-emacs
       # , ax-shell
       # , ghostty
       # , mikuboot

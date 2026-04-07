@@ -64,6 +64,12 @@ in
         EOF
       '';
     }) {})
+    (
+      pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+        [General]
+        background = "${background-package}/share/backgrounds/wallpaper.png"
+      ''
+    )
   ];
   qt.enable = true;
 
@@ -128,8 +134,8 @@ in
       enableHidpi = true;
       # Theme & extraPackages & settings General from
       # https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
-      theme = sddm-theme.pname;
-      extraPackages = sddm-theme.propagatedBuildInputs;
+      # theme = sddm-theme.pname;
+      # extraPackages = sddm-theme.propagatedBuildInputs;
       wayland.enable = true;
       wayland.compositor = "kwin";
       settings = {
