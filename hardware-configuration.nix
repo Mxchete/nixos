@@ -139,7 +139,7 @@
     XDG_SESSION_TYPE = "wayland";
     CLUTTER_BACKEND = "wayland";
     WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
-    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     # __GL_SHADER_DISK_CACHE="1";
     # __GL_SHADER_DISK_CACHE_PATH="/tmp";
     # __GL_SYNC_TO_VBLANK="1";
