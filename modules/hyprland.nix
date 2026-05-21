@@ -94,7 +94,7 @@ in
     fuzzel
     uwsm
     (python313.withPackages (python-pkgs: with python-pkgs; [
-      aubio
+      # aubio
       pyaudio
       numpy
       websockets

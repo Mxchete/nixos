@@ -244,7 +244,7 @@ in
     extraCompatPackages = with pkgs; [
       steamtinkerlaunch
       proton-ge-bin
-      protonup-qt
+      # protonup-qt
       # proton-cachyos_x86_64_v4
     ];
   };
@@ -300,6 +300,7 @@ in
     libreoffice
     limo # TODO: 9/19 fails to build dep rn 
     localsend
+    # lutris
     # minecraft # Currently Broken ???
     mangohud
     morewaita-icon-theme
@@ -318,6 +319,7 @@ in
     podman-tui
     poppler-utils
     prismlauncher
+    protonup-qt
     python313
     qemu
     r2modman
