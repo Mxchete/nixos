@@ -19,27 +19,27 @@
   #   package = pkgs.gnomeExtensions.gsconnect;
   # };
   environment.systemPackages = with pkgs.gnomeExtensions; [
-    blur-my-shell
-    appindicator
-    arcmenu
-    bluetooth-battery-meter
-    brightness-control-using-ddcutil
-    burn-my-windows
-    caffeine
-    clipboard-indicator
+    # blur-my-shell
+    # appindicator
+    # arcmenu
+    # bluetooth-battery-meter
+    # brightness-control-using-ddcutil
+    # burn-my-windows
+    # caffeine
+    # clipboard-indicator
     # dash-to-panel
-    dynamic-calendar-and-clocks-icons
-    foresight
-    fuzzy-app-search
-    gsconnect
-    just-perfection
-    kando-integration
-    media-progress
-    osd-volume-number
-    quick-settings-tweaker
-    rounded-window-corners-reborn
-    window-is-ready-remover
-    window-title-is-back
+    # dynamic-calendar-and-clocks-icons
+    # foresight
+    # fuzzy-app-search
+    # gsconnect
+    # just-perfection
+    # kando-integration
+    # media-progress
+    # osd-volume-number
+    # quick-settings-tweaker
+    # rounded-window-corners-reborn
+    # window-is-ready-remover
+    # window-title-is-back
     # ...
   ];
 }

@@ -270,7 +270,9 @@ in
     cargo
     celluloid
     dconf
-    discord
+    (discord.override {
+      withVencord = true;
+    })
     distrobox
     fastfetch
     ffmpeg
