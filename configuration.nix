@@ -57,7 +57,6 @@ in
       # Desktop Environment Selection
       # System Modules
       ./modules/fonts.nix
-      ./packages/drv
     ];
 
   nixpkgs.overlays = [
@@ -276,7 +275,7 @@ in
       withVencord = true;
     })
     distrobox
-    drv
+    (callPackage ./packages/drv { })
     fastfetch
     ffmpeg
     firefox

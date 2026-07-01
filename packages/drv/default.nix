@@ -1,27 +1,34 @@
-{ lib
+{ config
+, stdenv
+, lib
+, pkgs
 , fetchFromGitHub
 , gnumake
+, readline
 ,
 }:
 stdenv.mkDerivation rec {
-  pname = "signon-ui";
-  version = "0.17-unstable-2023-10-16";
+  pname = "bible-drv";
+  version = "v1.1";
 
-  src = fetchFromGitLab {
+  src = fetchFromGitHub {
     owner = "BryceVandegrift";
     repo = "drv";
     rev = "v1.1";
-    hash = "sha256-L37nypdrfg3ZGZE4uGtFoJlzNbFgTVgA36zCgzvzk6E=";
+    hash = "sha256-tscKD39KOxAnBj+nnsxueWcZn5HgIcMkhg/rAx4cC84=";
   };
 
-  # any nativeBuildInputs required for the plugin
-  nativeBuildInputs = [ gnumake ];
+  nativeBuildInputs = [ readline gnumake ];
 
-  # set any buildInputs that are not already included in Hyprland
-  # by default, Hyprland and its dependencies are included
   buildInputs = [ ];
 
-  buildPhase = ''
-    make
+  # buildPhase = ''
+  #   make drv
+  # '';
+
+  installPhase = ''
+    ls -al
+    mkdir -p $out/bin
+    install -m 755 drv $out/bin/drv
   '';
 }
