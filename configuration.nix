@@ -57,6 +57,7 @@ in
       # Desktop Environment Selection
       # System Modules
       ./modules/fonts.nix
+      ./packages/drv
     ];
 
   nixpkgs.overlays = [
@@ -265,6 +266,7 @@ in
     ani-cli
     arrpc
     better-control
+    bibata-cursors
     # bitwarden-desktop
     btop
     cargo
@@ -274,6 +276,7 @@ in
       withVencord = true;
     })
     distrobox
+    drv
     fastfetch
     ffmpeg
     firefox

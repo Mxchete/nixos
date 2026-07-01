@@ -3,13 +3,13 @@
 {
   # Makes kde better according to <github link>
   nixpkgs.overlays = lib.singleton (final: prev: {
-    kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
-      version = "0.8.6-dirty";
-      src = old.src.override {
-        rev = "cf5f80f80772fc47302b1d1adaeb9bc22a2e8756";
-        hash = "sha256-Q9hO8XGeyztHLXB4rZzv/aV84xj2c/h2P/jKrb9bUUA=";
-      };
-    });
+    # kde-rounded-corners = prev.kde-rounded-corners.overrideAttrs (old: {
+    #   version = "0.8.6-dirty";
+    #   src = old.src.override {
+    #     rev = "cf5f80f80772fc47302b1d1adaeb9bc22a2e8756";
+    #     hash = "sha256-Q9hO8XGeyztHLXB4rZzv/aV84xj2c/h2P/jKrb9bUUA=";
+    #   };
+    # });
     kdePackages = prev.kdePackages // {
       wallpaper-engine-plugin-new = prev.kdePackages.wallpaper-engine-plugin.overrideAttrs (old: {
         version = "0.5.4-unstable-2025-12-14-dirty";
@@ -135,7 +135,6 @@
     kdePackages.qtbase
     # Update rounded corners
     kde-rounded-corners
-    kdePackages.sddm-kcm
     kdePackages.accounts-qt
     kdePackages.calendarsupport
     kdePackages.flatpak-kcm
@@ -164,6 +163,7 @@
     klassy
     # Update Forceblur
     inputs.kwin-effects-glass.packages.${pkgs.system}.default
+    inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
   ];
 }
 

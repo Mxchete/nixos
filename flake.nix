@@ -7,8 +7,9 @@
     # Keep an eye on this flake to replace it
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
     # nix-software-center.url = "github:snowfallorg/nix-software-center";
+    # TODO: https://github.com/nix-community/lanzaboote/issues/624
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/0403b4b7e8b2612657f0053a4c315e6c43eee9e6";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
@@ -51,6 +52,10 @@
     # };
     kwin-effects-glass = {
       url = "github:4v3ngR/kwin-effects-glass";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    kwin-effects-better-blur-dx = {
+      url = "github:xarblu/kwin-effects-better-blur-dx";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     quickshell = {

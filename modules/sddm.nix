@@ -42,6 +42,7 @@ in
 {
   # From https://github.com/uiriansan/SilentSDDM?tab=readme-ov-file#NixOS-flake
   environment.systemPackages = [
+    pkgs.kdePackages.sddm-kcm
     sddm-theme
     pkgs.xsettingsd
     # sddm-theme.test
@@ -139,8 +140,8 @@ in
       wayland.enable = true;
       wayland.compositor = "kwin";
       settings = {
-        Theme.CursorTheme = "Adwaita";
-        Theme.CursorSize = "24";
+        # Theme.CursorTheme = "Adwaita";
+        # Theme.CursorSize = "24";
         X11.ServerArguments="-terminate -logfile /dev/null";
         General = {
           # GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard,QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
