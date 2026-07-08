@@ -270,6 +270,7 @@ in
     btop
     cargo
     celluloid
+    cozette
     dconf
     (discord.override {
       withVencord = true;
@@ -279,7 +280,7 @@ in
     fastfetch
     ffmpeg
     firefox
-    flatpak
+    # flatpak
     fzf
     gcc
     gdm-settings
@@ -294,6 +295,7 @@ in
     heroic
     htop
     ifuse
+    jp2a
     kando
     kdePackages.isoimagewriter
     kdePackages.ocean-sound-theme
@@ -316,11 +318,13 @@ in
     # openrct2
     # openrgb-with-all-plugins
     oreo-cursors-plus
+    p7zip
     pavucontrol
     pay-respects
     pciutils
     podman-compose
     podman-tui
+    poppler
     poppler-utils
     prismlauncher
     protonup-qt
@@ -330,6 +334,7 @@ in
     resources
     ripgrep
     sbctl
+    smartmontools
     sshfs
     stow
     timeshift
@@ -354,11 +359,25 @@ in
   services.orca.enable = lib.mkForce false;
   services.xserver.enable = true;
   services.flatpak.enable = true;
+  # TODO: Remove package override when merged in
+  services.flatpak.package = (
+    pkgs.flatpak.overrideAttrs (oldAttrs: {
+      patches = (oldAttrs.patches or []) ++ [
+        (pkgs.fetchpatch {
+          url = "https://patch-diff.githubusercontent.com/raw/flatpak/flatpak/pull/6721.patch";
+          sha256 = "sha256-g2tQ++3XMK7oBxcPGhtAcsHE1WEj9OgyS0QRmqv1b8I=";
+        })
+      ];
+    })
+  );
   # services.hardware.openrgb.enable = true;
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
   services.journald.extraConfig = "MaxFileSec=1month";
   services.lact.enable = true;
+  services.apcupsd = {
+    enable = true;
+  };
   services.snapper = {
     snapshotInterval = "hourly"; # used with `OnCalendar`, so must be interval
     cleanupInterval = "3h"; # used with `OnUnitActiveSec`, so must be duration

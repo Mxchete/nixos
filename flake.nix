@@ -1,7 +1,8 @@
 {
   description = "NixOS Top Level flake.nix";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
     # Chaotic ded
     # chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     # Keep an eye on this flake to replace it
