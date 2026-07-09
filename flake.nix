@@ -23,29 +23,33 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland";
-      submodules = true;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
+    # hyprland = {
+    #   # type = "git";
+    #   url = "github:hyprwm/Hyprland";
+    #   # submodules = true;
+    #   # inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # hyprland-plugins = {
+    #   url = "github:hyprwm/hyprland-plugins";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
     hypr-dynamic-cursors = {
       url = "github:VirtCode/hypr-dynamic-cursors";
-      inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
+      # inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
     };
     Hyprspace = {
       url = "github:KZDKM/Hyprspace";
-      inputs.hyprland.follows = "hyprland";
+      # inputs.hyprland.follows = "hyprland";
+    };
+    gloview = {
+      url = "github:fedsfarm/gloview";
+      # inputs.hyprland.follows = "hyprland";
     };
     hy3 = {
       url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
       # or "github:outfoxxed/hy3" to follow the development branch.
       # (you may encounter issues if you dont do the same for hyprland)
-      inputs.hyprland.follows = "hyprland";
+      # inputs.hyprland.follows = "hyprland";
     };
     # ax-shell = {
     #   url = "github:poogas/Ax-Shell";
@@ -121,11 +125,11 @@
     , nur
     , hy3
     , nix-doom-emacs
-      # , ax-shell
-      # , ghostty
-      # , mikuboot
-      # , hyprland
-      # , niri
+    # , ax-shell
+    # , ghostty
+    # , mikuboot
+    # , hyprland
+    # , niri
     , ...
     }@inputs: {
       nixosConfigurations = {
@@ -162,6 +166,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs; }; # from the passed down input, we can pass these as args to `home.nix`
               home-manager.users.mxchete = import ./home;
+              home-manager.backupFileExtension = "hm-backup";
             }
             ./modules/auto-upgrade.nix
           ];

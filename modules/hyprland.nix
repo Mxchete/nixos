@@ -39,6 +39,7 @@ in
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       # "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
     ];
+    trusted-users = ["root" "@wheel"];
   };
   xdg.portal.enable = true;
   # xdg.portal.extraPortals = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk pkgs. xdg-desktop-portal-gnome ];
