@@ -162,8 +162,8 @@
     darkly
     klassy
     # Update Forceblur
-    inputs.kwin-effects-glass.packages.${pkgs.system}.default
-    inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
+    inputs.kwin-effects-glass.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.kwin-effects-better-blur-dx.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
 
