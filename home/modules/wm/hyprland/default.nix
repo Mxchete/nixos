@@ -10,6 +10,14 @@
   # ];
   # programs.dankMaterialShell.enable = true;
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 24;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     configType = "lua";
@@ -32,6 +40,30 @@
     settings.mod = {
       _var = "SUPER";
     };
+
+    settings.config = {
+      general = {
+        gaps_in = 5;
+        gaps_out = 20;
+        border_size = 2;
+
+        allow_tearing = true;
+        layout = "dwindle";
+      };
+
+      decoration = {
+        rounding = 10;
+        rounding_power = 2;
+
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+          color = "0xee1a1a1a";
+        };
+      };
+    };
+
     settings.bind = [
       {
         _args = [
@@ -49,6 +81,27 @@
         _args = [
           (lib.generators.mkLuaInline "mod .. \" + M\"")
           (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'\")")
+        ];
+      }
+      {
+        _args = [
+          (lib.generators.mkLuaInline "mod .. \" + SPACE\"")
+          (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wofi\")")
+        ];
+      }
+    ];
+
+    settings.env = [
+      {
+        _args = [
+          (lib.generators.mkLuaInline "\"HYPRCURSOR_THEME\"")
+          (lib.generators.mkLuaInline "\"Bibata-Modern-Classic\"")
+        ];
+      }
+      {
+        _args = [
+          (lib.generators.mkLuaInline "\"HYPRCURSOR_SIZE\"")
+          (lib.generators.mkLuaInline "\"24\"")
         ];
       }
     ];
