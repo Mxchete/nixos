@@ -33,7 +33,7 @@ in
     flake = inputs.self.outPath;
     flags = [
       "--update-input"
-      "nixpkgs"
+      "nixpkgs-weekly"
       "--recreate-lock-file"
     ];
   };
