@@ -162,6 +162,7 @@
     alsa-plugins
   ];
 
+  hardware.uinput.enable = true;
   hardware = {
     graphics = {
       enable = true;

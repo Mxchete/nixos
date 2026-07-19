@@ -194,7 +194,7 @@ in
 
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" "uinput" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -278,6 +278,7 @@ in
     distrobox
     (callPackage ./packages/drv { })
     fastfetch
+    fetch
     ffmpeg
     firefox
     # flatpak
@@ -370,6 +371,12 @@ in
       ];
     })
   );
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
   # services.hardware.openrgb.enable = true;
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
