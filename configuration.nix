@@ -323,6 +323,7 @@ in
     pavucontrol
     pay-respects
     pciutils
+    playerctl
     podman-compose
     podman-tui
     poppler

@@ -32,8 +32,25 @@ in
     operation = "boot";
     flake = inputs.self.outPath;
     flags = [
-      "--update-input"
-      "nixpkgs-weekly"
+      "--update-input" "nixpkgs"
+      "--update-input" "nix-cachyos-kernel"
+      "--update-input" "lanzaboote"
+      "--update-input" "rust-overlay"
+      "--update-input" "home-manager"
+      "--update-input" "hypr-dynamic-cursors"
+      "--update-input" "Hyprspace"
+      "--update-input" "gloview"
+      "--update-input" "hy3"
+      "--update-input" "kwin-effects-glass"
+      "--update-input" "kwin-effects-better-blur-dx"
+      "--update-input" "quickshell"
+      "--update-input" "nur"
+      "--update-input" "nix-colors"
+      "--update-input" "silentSDDM"
+      "--update-input" "dgop"
+      "--update-input" "caelestia-shell"
+      "--update-input" "noctalia"
+      "--update-input" "nix-doom-emacs"
       "--recreate-lock-file"
     ];
   };
@@ -59,7 +76,7 @@ in
     path = [ pkgs.nix ];
     serviceConfig = {
       ExecStart = ''
-        ${pkgs.libnotify}/bin/notify-send "nixos-upgrade.service: Build Failure :(  Please retry the update manually" && exit
+        ${pkgs.libnotify}/bin/notify-send -u critical "nixos-upgrade.service: Build Failure :(  Please retry the update manually" && exit
       '';
     };
   };
