@@ -4,6 +4,7 @@
   enableMan = false;
   # Import all your configuration modules here
   imports = [
+    ./lib
     ./autocmd.nix
     ./keymaps.nix
     ./settings.nix
