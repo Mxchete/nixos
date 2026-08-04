@@ -233,7 +233,12 @@ in
 
   programs.gamescope = {
     enable = true;
-    capSysNice = true;
+    capSysNice = false;
+    env = {
+      "force_vk_vendor" = "nvidia";
+      "GAMESCOPE_WSI_HIDE_PRESENT_WAIT_EXT" = "1";
+      "ENABLE_VKBASALT" = "0";
+    };
   };
   programs.steam = {
     enable = true;
@@ -253,6 +258,7 @@ in
   programs.appimage.binfmt = true;
 
   environment.variables = {
+    STEAM_FORCE_DESKTOPUI_SCALING = "1.25";
     NIX_NEOVIM = "1";
   };
 
@@ -333,6 +339,7 @@ in
     python313
     qemu
     r2modman
+    rar
     resources
     ripgrep
     sbctl
