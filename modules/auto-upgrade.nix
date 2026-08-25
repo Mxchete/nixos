@@ -30,7 +30,7 @@ in
     dates = "Sun 06:00";
     persistent = true;
     operation = "boot";
-    flake = inputs.self.outPath;
+    flake = "/etc/nixos";
     flags = [
       "--update-input" "nixpkgs"
       "--update-input" "nix-cachyos-kernel"
@@ -52,7 +52,14 @@ in
       "--update-input" "noctalia"
       "--update-input" "nix-doom-emacs"
       "--recreate-lock-file"
+      "--commit-lock-file"
     ];
+  };
+  systemd.services.nixos-upgrade.environment = {
+    GIT_AUTHOR_NAME = "NixOS Auto-upgrade";
+    GIT_AUTHOR_EMAIL = "root@tengoku";
+    GIT_COMMITTER_NAME = "NixOS Auto-upgrade";
+    GIT_COMMITTER_EMAIL = "root@tengoku";
   };
   # systemd.services.nixos-upgrade = {
   #   preStart = "${pkgs.host}/bin/host example.com";
