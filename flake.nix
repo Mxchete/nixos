@@ -159,7 +159,7 @@
             ./modules/kde.nix
             ./modules/xfce.nix
             ./modules/hyprland.nix
-            ./modules/niri.nix
+            # ./modules/niri.nix
             ./modules/noctalia.nix
             home-manager.nixosModules.home-manager
             {

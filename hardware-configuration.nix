@@ -46,10 +46,12 @@
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
+    "ehci_pci"
     "ahci"
     "thunderbolt"
     "usb_storage"
     "usbhid"
+    "hid_generic"
     "sd_mod"
   ];
   boot.initrd.kernelModules = [

@@ -32,8 +32,8 @@
       # pkgs.hyprlandPlugins.hyprexpo
       # inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
       # inputs.hy3.packages.x86_64-linux.hy3
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
-      pkgs.hyprlandPlugins.hy3
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      # pkgs.hyprlandPlugins.hy3
       # inputs.gloview.packages.${pkgs.stdenv.hostPlatform.system}.gloview
       # inputs.Hyprspace.packages.${pkgs.system}.Hyprspace
     ];

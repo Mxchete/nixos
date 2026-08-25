@@ -212,7 +212,10 @@ in
 
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    # qemu.swtpm.enable = true;
+  };
   # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
   virtualisation.containers.enable = true;
   virtualisation = {
@@ -258,7 +261,7 @@ in
   programs.appimage.binfmt = true;
 
   environment.variables = {
-    STEAM_FORCE_DESKTOPUI_SCALING = "1.25";
+    STEAM_FORCE_DESKTOPUI_SCALING = "1.00";
     NIX_NEOVIM = "1";
   };
 
@@ -273,6 +276,7 @@ in
     better-control
     bibata-cursors
     # bitwarden-desktop
+    brasero
     btop
     cargo
     celluloid
@@ -287,7 +291,8 @@ in
     fetch
     ffmpeg
     firefox
-    # flatpak
+    flatpak
+    (fortune.overrideAttrs (old: { cmakeFlags = (old.cmakeFlags or []) ++ [ "-DNO_OFFENSIVE=0" ]; }))
     fzf
     gcc
     gdm-settings
@@ -305,9 +310,10 @@ in
     jp2a
     kando
     kdePackages.isoimagewriter
+    kdePackages.k3b
     kdePackages.ocean-sound-theme
     kitty
-    lact
+    # lact
     libimobiledevice
     libnotify
     libreoffice
@@ -323,7 +329,7 @@ in
     # oneko
     # openloco
     # openrct2
-    # openrgb-with-all-plugins
+    openrgb-with-all-plugins
     oreo-cursors-plus
     p7zip
     pavucontrol
@@ -368,17 +374,6 @@ in
   services.orca.enable = lib.mkForce false;
   services.xserver.enable = true;
   services.flatpak.enable = true;
-  # TODO: Remove package override when merged in
-  services.flatpak.package = (
-    pkgs.flatpak.overrideAttrs (oldAttrs: {
-      patches = (oldAttrs.patches or []) ++ [
-        (pkgs.fetchpatch {
-          url = "https://patch-diff.githubusercontent.com/raw/flatpak/flatpak/pull/6721.patch";
-          sha256 = "sha256-g2tQ++3XMK7oBxcPGhtAcsHE1WEj9OgyS0QRmqv1b8I=";
-        })
-      ];
-    })
-  );
   services.sunshine = {
     enable = true;
     autoStart = true;
@@ -386,10 +381,15 @@ in
     openFirewall = true;
   };
   # services.hardware.openrgb.enable = true;
+  # services.hardware.openrgb = {
+  #   enable = true;
+  #   package = pkgs.openrgb-with-all-plugins;
+  #   startupProfile = "main";
+  # };
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
   services.journald.extraConfig = "MaxFileSec=1month";
-  services.lact.enable = true;
+  # services.lact.enable = true;
   services.apcupsd = {
     enable = true;
   };
