@@ -194,12 +194,13 @@ in
 
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" "uinput" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" "uinput" "cdrom" "optical" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
 
   # programs.firefox.enable = true;
+  programs.k3b.enable = true;
   nixpkgs.config.allowUnfree = true;
 
   nix.gc = {
@@ -310,7 +311,6 @@ in
     jp2a
     kando
     kdePackages.isoimagewriter
-    kdePackages.k3b
     kdePackages.ocean-sound-theme
     kitty
     # lact
