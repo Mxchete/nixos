@@ -55,6 +55,8 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [
+    "usbhid"
+    "hid_generic"
     "dm-snapshot"
     "cryptd"
     "nvidia"

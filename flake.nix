@@ -6,7 +6,7 @@
     # Chaotic ded
     # chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     # Keep an eye on this flake to replace it
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     # nix-software-center.url = "github:snowfallorg/nix-software-center";
     # TODO: https://github.com/nix-community/lanzaboote/issues/624
     lanzaboote = {
@@ -143,7 +143,7 @@
             # ./modules/specialisation.nix
             ./configuration.nix
             ({ pkgs, ... }: {
-              nixpkgs.overlays = [ nix-cachyos-kernel.overlay ];
+              nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ];
               boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
               # nix.settings.substituters = [ "https://cache.garnix.io" ];
               # nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
@@ -159,7 +159,7 @@
             ./modules/kde.nix
             ./modules/xfce.nix
             ./modules/hyprland.nix
-            # ./modules/niri.nix
+            ./modules/niri.nix
             ./modules/noctalia.nix
             home-manager.nixosModules.home-manager
             {
