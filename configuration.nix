@@ -194,7 +194,19 @@ in
 
   users.users.mxchete = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "dialout" "docker" "uinput" "cdrom" "optical" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "dialout"
+      "docker"
+      "uinput"
+      "cdrom"
+      "optical"
+      "kvm"
+      "libvirtd"
+      "qemu-libvirtd"
+    ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -211,13 +223,27 @@ in
 
   nix.settings.auto-optimise-store = true;
 
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.libvirtd = {
     enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      verbatimConfig = ''
+        cgroup_device_acl = [
+            "/dev/null", "/dev/full", "/dev/zero",
+            "/dev/random", "/dev/urandom",
+            "/dev/ptmx", "/dev/kvm",
+            "/dev/nvidiactl", "/dev/nvidia0", "/dev/nvidia-modeset", "/dev/dri/renderD128"
+        ]
+        seccomp_sandbox = 0
+      '';
+    };
     # qemu.swtpm.enable = true;
   };
-  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  users.extraGroups.vboxusers.members = [ "mxchete" ];
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -229,6 +255,7 @@ in
     };
     # docker.enable = true;
   };
+  programs.virt-manager.enable = true;
   virtualisation.waydroid.enable = true; # Broken, python version issue
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"

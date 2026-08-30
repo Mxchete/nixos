@@ -165,5 +165,8 @@
     inputs.kwin-effects-glass.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.kwin-effects-better-blur-dx.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    baloo
+  ];
 }
 
