@@ -213,6 +213,7 @@ in
 
   # programs.firefox.enable = true;
   programs.k3b.enable = true;
+  programs.direnv.enable = true;
   nixpkgs.config.allowUnfree = true;
 
   nix.gc = {
@@ -298,6 +299,9 @@ in
   environment.systemPackages = with pkgs; [
     # Packages
     inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
+    inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.dmemcg-booster
+    inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.plasma-foreground-booster
+    inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.kcgroups
     adw-gtk3
     ani-cli
     arrpc
@@ -464,6 +468,15 @@ in
       TIMELINE_LIMIT_YEARLY = "0";
     };
   };
+  systemd.services.dmemcg-booster-system = {
+    overrideStrategy = "asDropin";
+    wantedBy = [ "multi-user.target" ];
+  }; 
+
+  systemd.user.services.dmemcg-booster-user = {
+    overrideStrategy = "asDropin";
+    wantedBy = [ "graphical-session-pre.target" ];
+  }; 
   # services.smartd.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are

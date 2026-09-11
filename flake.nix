@@ -3,6 +3,7 @@
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
+    nvidiapkgs-nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Chaotic ded
     # chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     # Keep an eye on this flake to replace it
@@ -113,11 +114,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # nixvim.url = "github:nix-community/nixvim";
   };
   outputs =
     { self
     , nixpkgs
+    , nvidiapkgs-nixos-unstable
     , nix-cachyos-kernel
       # , chaotic
     , lanzaboote
@@ -131,6 +134,7 @@
     # , mikuboot
     # , hyprland
     # , niri
+    , jovian
     , ...
     }@inputs: {
       nixosConfigurations = {
