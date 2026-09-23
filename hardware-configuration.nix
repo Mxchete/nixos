@@ -79,7 +79,8 @@ in
     "rivatv"
     "vga16fb"
   ];
-  boot.extraModulePackages = [ (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest ];
+  # boot.extraModulePackages = [ (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.latest ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [
@@ -203,7 +204,8 @@ in
       # powerManagement.finegrained = true;
       open = true;
       # Add patch until next driver release
-      package = (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
+      # package = (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       # package = config.boot.kernelPackages.nvidiaPackages.latest // {
       #   open = config.boot.kernelPackages.nvidiaPackages.latest.open.overrideAttrs (old: {
       #     patches = (old.patches or [ ]) ++ [
