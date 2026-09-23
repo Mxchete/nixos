@@ -342,6 +342,7 @@ in
     jp2a
     kando
     kdePackages.isoimagewriter
+    kdePackages.kdenlive
     kdePackages.ocean-sound-theme
     kitty
     # lact
@@ -353,6 +354,7 @@ in
     # lutris
     # minecraft # Currently Broken ???
     mangohud
+    manuskript
     morewaita-icon-theme
     mpv
     neovim
@@ -419,7 +421,12 @@ in
   # };
   services.usbmuxd.enable = true;
   services.fwupd.enable = true;
-  services.journald.extraConfig = "MaxFileSec=1month";
+  services.journald.settings.Journal = {
+    Storage = "persistent";
+    RateLimitInterval = "30s";
+    RateLimitBurst = "10000";
+    MaxFileSec = "1month";
+  };
   # services.lact.enable = true;
   services.apcupsd = {
     enable = true;
@@ -468,6 +475,11 @@ in
       TIMELINE_LIMIT_YEARLY = "0";
     };
   };
+
+  systemd.packages = [
+    inputs.jovian.legacyPackages.${pkgs.stdenv.hostPlatform.system}.dmemcg-booster
+  ];
+
   systemd.services.dmemcg-booster-system = {
     overrideStrategy = "asDropin";
     wantedBy = [ "multi-user.target" ];
