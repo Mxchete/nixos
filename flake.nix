@@ -115,7 +115,7 @@
     };
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
-    # nixvim.url = "github:nix-community/nixvim";
+    nixvim.url = "github:nix-community/nixvim";
   };
   outputs =
     { self
@@ -174,6 +174,7 @@
               home-manager.backupFileExtension = "hm-backup";
             }
             ./modules/auto-upgrade.nix
+	    ./modules/neovim.nix
           ];
         };
       };

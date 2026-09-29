@@ -30,6 +30,7 @@
             "systemverilog-grammar"
             "tlaplus-grammar"
             "verilog-grammar"
+            "python-grammar"
           ];
         in
         lib.filter (g: !(lib.elem g.pname excludedGrammars)) config.plugins.treesitter.package.allGrammars;
