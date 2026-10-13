@@ -174,7 +174,13 @@
               home-manager.backupFileExtension = "hm-backup";
             }
             ./modules/auto-upgrade.nix
-	    ./modules/neovim.nix
+	    inputs.nixvim.nixosModules.nixvim
+	    {
+	      programs.nixvim = {
+	        enable = true;
+	        imports = [ ./modules/neovim.nix ];
+	      };
+	    }
           ];
         };
       };

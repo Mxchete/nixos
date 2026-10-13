@@ -80,7 +80,7 @@ in
     "vga16fb"
   ];
   # boot.extraModulePackages = [ (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.latest ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.latest ];
   # define LUKS device
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/cryptlvm";
   boot.kernelModules = [
@@ -205,7 +205,16 @@ in
       open = true;
       # Add patch until next driver release
       # package = (nvidiapkgs-nixos-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # TODO: Pin driver version until release fixes waking monitor bug
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "610.57.04";
+        sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
+        sha256_aarch64 = "sha256-QCefrMBCmpOwuOyXv1k5Gj0iB2CYlPgnG3JToUw/j54=";
+        openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+        settingsSha256 = "sha256-ZEMo8I8Zc2Tq6RVDNYpAH+f094dUaZiBqO+5f6lIjRI=";
+        persistencedSha256 = "sha256-aXmD2VY1RLlgAnlHhOUMWzvMyhI6JTClcFLm4imF/mA=";
+      };
+      # package = config.boot.kernelPackages.nvidiaPackages.latest;
       # package = config.boot.kernelPackages.nvidiaPackages.latest // {
       #   open = config.boot.kernelPackages.nvidiaPackages.latest.open.overrideAttrs (old: {
       #     patches = (old.patches or [ ]) ++ [

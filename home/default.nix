@@ -11,7 +11,7 @@
     ./modules/hypr/hyprlock
     ./modules/bar/waybar
     ./modules/wofi
-    # ./modules/programs/neovim
+    ./modules/programs/neovim
     # ./modules/programs/caelestia
     # ./modules/hypr/hyprpanel
   ];
