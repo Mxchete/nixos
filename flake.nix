@@ -34,24 +34,24 @@
     #   url = "github:hyprwm/hyprland-plugins";
     #   inputs.hyprland.follows = "hyprland";
     # };
-    hypr-dynamic-cursors = {
-      url = "github:VirtCode/hypr-dynamic-cursors";
-      # inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
-    };
-    Hyprspace = {
-      url = "github:KZDKM/Hyprspace";
-      # inputs.hyprland.follows = "hyprland";
-    };
-    gloview = {
-      url = "github:fedsfarm/gloview";
-      # inputs.hyprland.follows = "hyprland";
-    };
-    hy3 = {
-      url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
-      # or "github:outfoxxed/hy3" to follow the development branch.
-      # (you may encounter issues if you dont do the same for hyprland)
-      # inputs.hyprland.follows = "hyprland";
-    };
+    # hypr-dynamic-cursors = {
+    #   url = "github:VirtCode/hypr-dynamic-cursors";
+    #   # inputs.hyprland.follows = "hyprland"; # to make sure that the plugin is built for the correct version of hyprland
+    # };
+    # Hyprspace = {
+    #   url = "github:KZDKM/Hyprspace";
+    #   # inputs.hyprland.follows = "hyprland";
+    # };
+    # gloview = {
+    #   url = "github:fedsfarm/gloview";
+    #   # inputs.hyprland.follows = "hyprland";
+    # };
+    # hy3 = {
+    #   url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
+    #   # or "github:outfoxxed/hy3" to follow the development branch.
+    #   # (you may encounter issues if you dont do the same for hyprland)
+    #   # inputs.hyprland.follows = "hyprland";
+    # };
     # ax-shell = {
     #   url = "github:poogas/Ax-Shell";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -64,13 +64,13 @@
       url = "github:xarblu/kwin-effects-better-blur-dx";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-
-      # THIS IS IMPORTANT
-      # Mismatched system dependencies will lead to crashes and other issues.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # quickshell = {
+    #   url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    #
+    #   # THIS IS IMPORTANT
+    #   # Mismatched system dependencies will lead to crashes and other issues.
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     # ghostty = {
     #   url = "github:ghostty-org/ghostty";
     # };
@@ -91,10 +91,10 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # dgop = {
+    #   url = "github:AvengeMedia/dgop";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     # dms-cli = {
     #   url = "github:AvengeMedia/danklinux";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -105,14 +105,14 @@
     #   inputs.dgop.follows = "dgop";
     #   inputs.dms-cli.follows = "dms-cli";
     # };
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # caelestia-shell = {
+    #   url = "github:caelestia-dots/shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # noctalia = {
+    #   url = "github:noctalia-dev/noctalia-shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     nixvim.url = "github:nix-community/nixvim";
@@ -125,9 +125,9 @@
       # , chaotic
     , lanzaboote
     , home-manager
-    , nix-colors
+    # , nix-colors
     , nur
-    , hy3
+    # , hy3
     , nix-doom-emacs
     # , ax-shell
     # , ghostty
@@ -164,7 +164,7 @@
             ./modules/xfce.nix
             ./modules/hyprland.nix
             ./modules/niri.nix
-            ./modules/noctalia.nix
+            # ./modules/noctalia.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

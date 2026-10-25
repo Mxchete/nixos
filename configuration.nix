@@ -224,8 +224,8 @@ in
 
   nix.settings.auto-optimise-store = true;
 
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.libvirtd = {
     enable = true;
@@ -244,7 +244,7 @@ in
     };
     # qemu.swtpm.enable = true;
   };
-  users.extraGroups.vboxusers.members = [ "mxchete" ];
+  # users.extraGroups.vboxusers.members = [ "mxchete" ];
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -298,7 +298,7 @@ in
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     # Packages
-    inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
+    # inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.dmemcg-booster
     inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.plasma-foreground-booster
     inputs.jovian.legacyPackages.${stdenv.hostPlatform.system}.kcgroups
@@ -349,7 +349,7 @@ in
     libimobiledevice
     libnotify
     libreoffice
-    limo # TODO: 9/19 fails to build dep rn 
+    # limo # TODO: 10/18 fails to build rn 
     localsend
     # lutris
     # minecraft # Currently Broken ???
