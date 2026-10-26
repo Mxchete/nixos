@@ -20,11 +20,13 @@
 
   programs.neovim = {
     enable = true;
+    withPython3 = true;
+    withRuby = true;
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withAllGrammars)
     ];
 
-    extraLuaConfig = ''
+    initLua = ''
       require('config.lazy')
     '';
   };
